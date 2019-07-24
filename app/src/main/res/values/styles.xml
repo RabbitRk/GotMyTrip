@@ -6,6 +6,71 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="Login_page" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:listPreferredItemHeightSmall">40dp</item><!-- item size in menu-->
+        <item name="listPreferredItemHeightSmall">40dp</item><!-- item size in menu-->
+    </style>
+
+    <style name="NavigationDrawerStyle2">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">#fff</item>
+
+
+
+        <!--<item name="android:itemTextAppearance">@color/colorAccent</item>-->
+        <!--<item name="android:listPreferredItemHeightSmall">40dp</item>&lt;!&ndash; item size in menu&ndash;&gt;-->
+        <!--<item name="listPreferredItemHeightSmall">40dp</item>&lt;!&ndash; item size in menu&ndash;&gt;-->
+    </style>
+
+    <style name="NavigationDrawerStyle3">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.2</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Login_page.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Login_page.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!--<style name="MyNavigation" parent="Widget.Design.BottomNavigationView">-->
+    <!--<item name="android:typeface">serif</item>-->
+    <!--<item name="android:textSize">14sp</item>-->
+    <!--<item name="android:drawableTop">10dp</item>-->
+    <!--</style>-->
+
+    <style name="BottomNavigation">
+        <item name="android:background">@color/bottom_nav_color</item>
+        <item name="itemBackground">@drawable/bottom_nav</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="itemIconTint">@color/colorAccent</item>
+        <!--<item name="itemTextColor">@color/navigation_bar_txt_color</item>-->
+        <!--<item name="paddingStart">@dimen/bottom_navigation_padding</item>-->
+        <!--<item name="paddingEnd">@dimen/bottom_navigation_padding</item>-->
+    </style>
+
+    <style name="custom" parent="NavigationDrawerStyle2">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
 </resources>
