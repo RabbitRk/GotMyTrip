@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
     <fragment
@@ -20,9 +21,225 @@
         <!--android:layout_centerHorizontal="true"-->
         <!--android:layout_margin="7dp" />-->
 
-    <include
-        android:id="@+id/marker_view_incl"
-        layout="@layout/marker"
+
+    <!--<include-->
+        <!--android:id="@+id/marker_view_incl"-->
+        <!--layout="@layout/marker"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+    <!--Layout Title-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:cardBackgroundColor="@color/menu_bar_color"
+        app:contentPaddingLeft="10dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <!--Open side navigation bar-->
+            <ImageButton
+                android:id="@+id/nav_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/ic_drawer"
+                tools:ignore="ContentDescription" />
+
+            <!--App title-->
+            <TextView
+                android:id="@+id/appname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="30dp"
+                android:text="GMT"
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <!--Main Cardview-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:clipToPadding="false"
+        app:cardBackgroundColor="@color/bgcolor"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--pick up location-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/tranfer_color">
+
+                <TextView
+                    android:id="@+id/pickupLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="1dp"
+                    android:background="@drawable/textview_border"
+                    android:drawableStart="@drawable/pick"
+                    android:fontFamily="sans_serif"
+                    android:gravity="center|center_vertical"
+                    android:hint="Pick Up Location"
+                    android:letterSpacing="0.05"
+                    android:maxLines="1"
+                    android:onClick="Searchpickup"
+                    android:scrollHorizontally="true"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="12sp" />
+            </androidx.cardview.widget.CardView>
+
+            <!--Drop location-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:cardBackgroundColor="@color/tranfer_color">
+
+                <TextView
+                    android:id="@+id/dropLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="1dp"
+                    android:background="@drawable/textview_border"
+                    android:drawableStart="@drawable/drop"
+                    android:fontFamily="sans_serif"
+                    android:gravity="center|center_vertical"
+                    android:hint="Drop Location"
+                    android:letterSpacing="0.05"
+                    android:maxLines="1"
+                    android:onClick="Searchdrop"
+                    android:scrollHorizontally="true"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="12sp" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!--Types of ride-->
+    <LinearLayout
+        android:id="@+id/btn_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/rental"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/bgcolor"
+            android:fontFamily="sans_serif"
+            android:letterSpacing="0.05"
+            android:onClick="onSlideViewButtonClick"
+            android:text="Rental"
+            android:textAllCaps="false"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/bgcolor"
+            android:fontFamily="sans_serif"
+            android:letterSpacing="0.05"
+            android:onClick="onSlideViewButtonClick"
+            android:text="City"
+            android:textAllCaps="false"
+            android:textColor="#ffff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/outstation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/bgcolor"
+            android:fontFamily="sans_serif"
+            android:letterSpacing="0.05"
+            android:onClick="onSlideViewButtonClick"
+            android:text="Outstation"
+            android:textAllCaps="false"
+            android:textColor="#ffff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!--Vehicle Category-->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
+        style="@style/BottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_nav_bar"
+        android:layout_marginBottom="2dp"
+        android:background="@color/bgcolor"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/colorAccent"
+        app:itemTextAppearanceActive="@style/NavigationDrawerStyle3"
+        app:itemTextAppearanceInactive="@style/NavigationDrawerStyle2"
+        app:menu="@menu/btm_nav" />
+
+    <!--Side navigation bar-->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/bgcolor"
+        android:visibility="gone"
+        app:headerLayout="@layout/nav_header"
+        app:itemIconTint="@color/colorAccent"
+        app:itemTextAppearance="@style/NavigationDrawerStyle"
+        app:itemTextColor="#fff"
+        app:menu="@menu/drawer_menu" />
+
 </RelativeLayout>

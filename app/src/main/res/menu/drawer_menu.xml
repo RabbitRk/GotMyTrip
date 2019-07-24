@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single"
+        />
+        <group android:id="@+id/group1"
+            android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_book"
+                android:icon="@drawable/ic_book"
+                android:title="Book" />
+        </group>
+        <group android:id="@+id/group2"
+            android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_your_rides"
+                android:icon="@drawable/ic_your_rides"
+                android:title="Your Rides" />
+        </group>
+        <group android:id="@+id/group3"
+            android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_about"
+                android:title="About"
+                />
+        </group>
+
+        <group android:id="@+id/group4"
+            android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/nav_support"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="Settings" />
+        </group>
+        <group android:id="@+id/group5"
+            android:checkableBehavior="single">
+
+
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_feedback"
+                android:title="Feedback" />
+        </group>
+
+        <group android:id="@+id/group6"
+            android:checkableBehavior="single"/>
+
+
+
+</menu>

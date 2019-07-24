@@ -22,6 +22,11 @@ public class CustomMapFragment extends MapFragment {
         return mMapWrapperLayout;
     }
 
+    public MapWrapperLayout getMapWrapperLayout()
+    {
+        return mMapWrapperLayout;
+    }
+
     @Override
     public View getView() {
         return mOriginalView;
