@@ -1,4 +1,4 @@
-package com.rabbitt.gotmytrip;
+package com.rabbitt.gotmytrip.MapPackage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

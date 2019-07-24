@@ -1,4 +1,4 @@
-package com.rabbitt.gotmytrip;
+package com.rabbitt.gotmytrip.MapPackage;
 
 import android.content.Context;
 import android.util.Log;

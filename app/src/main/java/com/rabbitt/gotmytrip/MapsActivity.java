@@ -12,6 +12,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
+import com.rabbitt.gotmytrip.MapPackage.CustomMapFragment;
+import com.rabbitt.gotmytrip.MapPackage.MapWrapperLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;

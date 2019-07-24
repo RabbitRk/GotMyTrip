@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/map"
-        android:name="com.rabbitt.gotmytrip.CustomMapFragment"
+        android:name="com.rabbitt.gotmytrip.MapPackage.CustomMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
