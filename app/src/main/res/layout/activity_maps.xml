@@ -12,22 +12,6 @@
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
 
-    <!--<include-->
-        <!--android:id="@+id/location_display_incl"-->
-        <!--layout="@layout/card"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_margin="7dp" />-->
-
-
-    <!--<include-->
-        <!--android:id="@+id/marker_view_incl"-->
-        <!--layout="@layout/marker"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
-
     <!--Layout Title-->
     <androidx.cardview.widget.CardView
         android:id="@+id/toolbar"
@@ -60,9 +44,8 @@
                 android:id="@+id/appname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginStart="30dp"
-                android:text="GMT"
+                android:text="@string/gmt"
                 android:textColor="@color/text_color"
                 android:textSize="18sp" />
 
@@ -107,7 +90,7 @@
                     android:drawableStart="@drawable/pick"
                     android:fontFamily="sans_serif"
                     android:gravity="center|center_vertical"
-                    android:hint="Pick Up Location"
+                    android:hint="@string/pick_up_location"
                     android:letterSpacing="0.05"
                     android:maxLines="1"
                     android:onClick="Searchpickup"
@@ -134,7 +117,7 @@
                     android:drawableStart="@drawable/drop"
                     android:fontFamily="sans_serif"
                     android:gravity="center|center_vertical"
-                    android:hint="Drop Location"
+                    android:hint="@string/drop_location"
                     android:letterSpacing="0.05"
                     android:maxLines="1"
                     android:onClick="Searchdrop"
@@ -166,7 +149,7 @@
             android:fontFamily="sans_serif"
             android:letterSpacing="0.05"
             android:onClick="onSlideViewButtonClick"
-            android:text="Rental"
+            android:text="@string/rental"
             android:textAllCaps="false"
             android:textColor="@color/text_color"
             android:textSize="14sp"
@@ -186,7 +169,7 @@
             android:fontFamily="sans_serif"
             android:letterSpacing="0.05"
             android:onClick="onSlideViewButtonClick"
-            android:text="City"
+            android:text="@string/city"
             android:textAllCaps="false"
             android:textColor="#ffff"
             android:textSize="14sp"
@@ -206,7 +189,7 @@
             android:fontFamily="sans_serif"
             android:letterSpacing="0.05"
             android:onClick="onSlideViewButtonClick"
-            android:text="Outstation"
+            android:text="@string/outstation"
             android:textAllCaps="false"
             android:textColor="#ffff"
             android:textSize="14sp"

@@ -108,4 +108,12 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pasnotchanged">Password is not changed</string>
+    <string name="pick_up_location">Pick Up Location</string>
+    <string name="gmt">GMT</string>
+    <string name="drop_location">Drop Location</string>
+    <string name="rental">Rental</string>
+    <string name="city">City</string>
+    <string name="outstation">Outstation</string>
+    <string name="ride_later">Ride Later</string>
+    <string name="ride_now">Ride Now</string>
 </resources>

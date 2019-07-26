@@ -10,8 +10,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Map permissions -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Map permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -24,6 +23,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".CityPackage.CityActivity"></activity>
+        <activity
+            android:name=".OutstationPackage.OutstationAcitvity"
+            tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".RentalPackage.RentalActivity"
+            tools:ignore="InnerclassSeparator" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SplashScreen" />
