@@ -30,8 +30,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.rabbitt.gotmytrip.BottomSheet.BookBottomSheet;
-import com.rabbitt.gotmytrip.BottomSheet.cityBottomsheet;
+import com.rabbitt.gotmytrip.RentalPackage.BookBottomSheet;
+import com.rabbitt.gotmytrip.CityPackage.cityBottomsheet;
 import com.rabbitt.gotmytrip.MapPackage.CustomMapFragment;
 import com.rabbitt.gotmytrip.MapPackage.MapWrapperLayout;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
@@ -60,7 +60,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean isUp;
     //Type Variable says about rent or city or out
     String type;
-    View myView;
+//    View myView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +113,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         rent_button = findViewById(R.id.rental);
         city_button = findViewById(R.id.city);
         outstation_button = findViewById(R.id.outstation);
-
     }
 
     private void initilizeMap() {
@@ -182,12 +181,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     completeAddress += "," + addressIndex3;
                 }
 
-                if (trance == 0)
-                {
+                if (trance == 0) {
                     pickupLocTxt.setText(completeAddress);
-                }
-                else
-                {
+                } else {
                     dropLocTxt.setText(completeAddress);
                 }
             }
@@ -202,13 +198,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void turnOnGPS() {
 
-        // Todo Location Already on  ... start
         final LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (manager != null && manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(this)) {
             Toast.makeText(this, "Gps already enabled", Toast.LENGTH_SHORT).show();
-
         }
-        // Todo Location Already on  ... end
 
         if (!hasGPSDevice(this)) {
             Toast.makeText(this, "Gps not Supported", Toast.LENGTH_SHORT).show();
@@ -235,7 +228,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return providers.contains(LocationManager.GPS_PROVIDER);
     }
 
-//  Permission Checking Area-Start
+    //  Permission Checking Area-Start
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), INTERNET);
@@ -282,20 +275,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onCameraMove() {
         LatLng center = mMap.getCameraPosition().target;
-        Log.i(TAG, "onCameraMove: "+center);
+        Log.i(TAG, "onCameraMove: " + center);
     }
+
 //  Permission Checking Area-End
 
     public void Searchpickup(View view) {
-
+        Toast.makeText(this, "pick up location", Toast.LENGTH_SHORT).show();
     }
 
     public void Searchdrop(View view) {
-
+        Toast.makeText(this, "drop location", Toast.LENGTH_SHORT).show();
     }
 
     public void onSlideViewButtonClick(View view) {
-
 
         if (isUp) {
 
@@ -305,27 +298,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     type = "rental";
                     dropVisiblity(type);
                     getRentalnavigation(type);
-                    slideDown(myView);
+                    slideDown(bottomNavigationView);
                     break;
                 case R.id.city:
                     city_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "city";
                     dropVisiblity(type);
                     getCitynavigation(type);
-                    slideDown(myView);
+                    slideDown(bottomNavigationView);
                     break;
                 case R.id.outstation:
                     outstation_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "outstation";
                     dropVisiblity(type);
                     getOutstation(type);
-                    slideDown(myView);
+                    slideDown(bottomNavigationView);
                     break;
-
             }
 
         } else {
-            slideUp(myView);
+            slideUp(bottomNavigationView);
             switch (view.getId()) {
                 case R.id.rental:
 
@@ -367,7 +359,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void slideDown(View view) {
-        myView.setVisibility(View.GONE);
+        bottomNavigationView.setVisibility(View.GONE);
         TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
         animate.setDuration(500);
         view.startAnimation(animate);
@@ -414,7 +406,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         bundle0.putString("dropn", dropLocTxt.getText().toString());
                         bundle0.putString("vehicle", "Auto");
                         bundle0.putString("travel_type", type);
-                        bundle0.putString("base_fare","35");
+                        bundle0.putString("base_fare", "35");
                         bottomSheet.setArguments(bundle0);
                         bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
                         break;
@@ -424,7 +416,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Bundle bundle = new Bundle();
                         bundle.putString("pickn", pickupLocTxt.getText().toString());
                         bundle.putString("dropn", dropLocTxt.getText().toString());
-                        bundle.putString("base_fare","150");
+                        bundle.putString("base_fare", "150");
                         bundle.putString("vehicle", "Prime");
                         bundle.putString("travel_type", type);
                         bottomSheet1.setArguments(bundle);
@@ -437,7 +429,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("pickn", pickupLocTxt.getText().toString());
                         bundle1.putString("dropn", dropLocTxt.getText().toString());
-                        bundle1.putString("base_fare","200");
+                        bundle1.putString("base_fare", "200");
                         bundle1.putString("vehicle", "SUV");
                         bundle1.putString("travel_type", type);
                         bottomSheet2.setArguments(bundle1);
@@ -448,7 +440,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
-
 
 
     private void getRentalnavigation(String typeof) {
@@ -476,7 +467,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         bundle.putString("pickn", pickupLocTxt.getText().toString());
                         bundle.putString("vehicle", "Prime");
                         bundle.putString("travel_type", type);
-                        bundle.putString("base_fare","399");
+                        bundle.putString("base_fare", "399");
                         bottomSheet1.setArguments(bundle);
                         bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
                         break;
@@ -487,7 +478,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         bundle1.putString("pickn", pickupLocTxt.getText().toString());
                         bundle1.putString("vehicle", "SUV");
                         bundle1.putString("travel_type", type);
-                        bundle1.putString("base_fare","599");
+                        bundle1.putString("base_fare", "599");
                         bottomSheet2.setArguments(bundle1);
                         bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
                         break;
@@ -496,6 +487,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+
     private void slideUp(View view) {
         view.setVisibility(View.VISIBLE);
         TranslateAnimation animate = new TranslateAnimation(

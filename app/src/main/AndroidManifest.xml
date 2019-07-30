@@ -23,7 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CityPackage.CityActivity"></activity>
+        <activity android:name=".TermsActivity"></activity>
+        <activity android:name=".OtpActivity" />
+        <activity android:name=".Forgot_password" />
+        <activity android:name=".CityPackage.CityActivity" />
         <activity
             android:name=".OutstationPackage.OutstationAcitvity"
             tools:ignore="InnerclassSeparator" />

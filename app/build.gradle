@@ -35,4 +35,7 @@ dependencies {
 
     //Transition Library
     implementation "com.andkulikov:transitionseverywhere:2.0.0"
+    //volley library
+    implementation 'com.android.volley:volley:1.1.1'
+
 }

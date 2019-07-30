@@ -1,4 +1,4 @@
-package com.rabbitt.gotmytrip.BottomSheet;
+package com.rabbitt.gotmytrip.CityPackage;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,27 +20,23 @@ import com.rabbitt.gotmytrip.R;
 
 public class cityBottomsheet extends BottomSheetDialogFragment {
 
-    static String pick_up_loc= null;
-    static String drop_loc= null;
-    static String v_type= null;
-    static String type= null;
-    static String ori_lat= null;
-    static String ori_lng = null;
-    static String dest_lat = null;
-    static String dest_lng = null;
-    static String price= null;
-    Button rideNow, rideLater;
-    TextView price_txt;
-    ImageView vehicle_icon;
+    private static String pick_up_loc= null;
+    private static String drop_loc= null;
+    private static String v_type= null;
+    private static String type= null;
+    private static String ori_lat= null;
+    private static String ori_lng = null;
+    private static String dest_lat = null;
+    private static String dest_lng = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.city_bottom_sheet, container, false);
 
-        rideNow = v.findViewById(R.id.ride_now);
-        vehicle_icon=v.findViewById(R.id.iconcard);
-        price_txt=v.findViewById(R.id.price);
+        Button rideNow = v.findViewById(R.id.ride_now);
+        ImageView vehicle_icon = v.findViewById(R.id.iconcard);
+        TextView price_txt = v.findViewById(R.id.price);
 
         assert getArguments() != null;
         pick_up_loc = getArguments().getString("pickn");
@@ -48,7 +44,7 @@ public class cityBottomsheet extends BottomSheetDialogFragment {
         type = getArguments().getString("travel_type");
         drop_loc = getArguments().getString("dropn");
         ori_lat = getArguments().getString("ori_lat");
-        price=getArguments().getString("base_fare");
+        String price = getArguments().getString("base_fare");
         ori_lng = getArguments().getString("ori_lng");
         dest_lat = getArguments().getString("dest_lat");
         dest_lng = getArguments().getString("dest_lng");

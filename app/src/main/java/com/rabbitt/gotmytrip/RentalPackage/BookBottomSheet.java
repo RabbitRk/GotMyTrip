@@ -1,4 +1,4 @@
-package com.rabbitt.gotmytrip.BottomSheet;
+package com.rabbitt.gotmytrip.RentalPackage;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -22,37 +22,35 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.rabbitt.gotmytrip.R;
-import com.rabbitt.gotmytrip.RentalPackage.RentalActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class BookBottomSheet extends BottomSheetDialogFragment {
 
-    static String price= null;
-    Button ridenow, ridelater;
     Boolean check_time = false, check_date = false;
-    ImageView vehicle_icon;
-    String rideLater_date, rideLater_time, pick_up_loc, v_type = "2", type, drop_loc;
-    TextView price_txt;
-    private BottomSheetListener mListener;
-    private int mYear, mMonth, mDay, mHour, mMinute;
+    private String rideLater_date, rideLater_time, pick_up_loc, v_type = "2";
+
+    private int mYear;
+    private int mMonth;
+    private int mDay;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.bottom_sheet_container, container, false);
-        ridenow = v.findViewById(R.id.ride_now2);
-        ridelater = v.findViewById(R.id.button3);
-        vehicle_icon=v.findViewById(R.id.iconcard);
-        price_txt=v.findViewById(R.id.price);
+
+
+        Button ridenow = v.findViewById(R.id.ride_now2);
+        Button ridelater = v.findViewById(R.id.button3);
+        ImageView vehicle_icon = v.findViewById(R.id.iconcard);
+        TextView price_txt = v.findViewById(R.id.price);
 
         assert getArguments() != null;
         pick_up_loc = getArguments().getString("pickn");
         v_type = getArguments().getString("vehicle");
-        price=getArguments().getString("base_fare");
-        type = getArguments().getString("travel_type");
-        drop_loc = getArguments().getString("dropn");
+        String price = getArguments().getString("base_fare");
+
         price_txt.setText(price);
 
         switch (v_type){
@@ -110,6 +108,10 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
+        final int finalMYear = mYear;
+        final int finalMMonth = mMonth;
+        final int finalMDay = mDay;
+
         ridelater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +130,7 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
                                     getTime();
 
                                 }
-                            }, mYear, mMonth, mDay);
+                            }, finalMYear, finalMMonth, finalMDay);
                     datePickerDialog.show();
                 }
                 else {
@@ -152,8 +154,8 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
     private void getTime() {
 
         final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+        int mHour = c.get(Calendar.HOUR_OF_DAY);
+        int mMinute = c.get(Calendar.MINUTE);
 
         final TimePickerDialog timePickerDialog2 = new TimePickerDialog(getContext(),
                 new TimePickerDialog.OnTimeSetListener() {
@@ -191,7 +193,7 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
         super.onAttach(context);
 
         try {
-            mListener = (BottomSheetListener) context;
+            BottomSheetListener mListener = (BottomSheetListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement BottomSheetListener");

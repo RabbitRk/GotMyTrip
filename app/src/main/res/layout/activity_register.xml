@@ -1,9 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="217dp"
+        android:layout_height="192dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        app:srcCompat="@drawable/newlogo"
+        tools:ignore="ContentDescription" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/textview_border"
+            android:drawableStart="@drawable/user_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/username"
+            android:inputType="text"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:textColor="#ffff"
+            android:textColorHint="#ffff"
+            android:textSize="13sp"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/emailid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/textview_border"
+            android:drawableStart="@drawable/user_mail_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/email_address"
+            android:inputType="textEmailAddress"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:textColor="#ffff"
+            android:textColorHint="#ffff"
+            android:textSize="13sp"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/textview_border"
+            android:drawableStart="@drawable/user_pass_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLength="8"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:textColor="#ffff"
+            android:textColorHint="#ffff"
+            android:textSize="13sp"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/confirm_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/textview_border"
+            android:drawableStart="@drawable/ic_user_password"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            android:maxLength="8"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:textColor="#ffff"
+            android:textColorHint="#ffff"
+            android:textSize="13sp"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/textview_border"
+            android:digits="0123456789"
+            android:drawableStart="@drawable/user_phone_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:textColor="#ffff"
+            android:textColorHint="#ffff"
+            android:textSize="13sp"
+            tools:ignore="Autofill" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <!--<CheckBox-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:buttonTint="@color/colorAccent"-->
+
+            <!--/>-->
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="serif"
+                android:text="I Accept"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#ffff"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:onClick="openTerms"
+
+                android:paddingStart="4dp"
+
+                android:paddingEnd="4dp"
+                android:text="@string/terms"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#ffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/loading_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="sans-serif"
+            android:onClick="register"
+            android:text="@string/Register_btn"
+            android:textColor="@color/text_color"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+</LinearLayout>

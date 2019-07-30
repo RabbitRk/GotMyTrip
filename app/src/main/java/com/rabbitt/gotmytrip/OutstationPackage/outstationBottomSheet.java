@@ -1,7 +1,7 @@
 
 
 
-package com.rabbitt.gotmytrip.BottomSheet;
+package com.rabbitt.gotmytrip.OutstationPackage;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.rabbitt.gotmytrip.OutstationPackage.OutstationAcitvity;
+import com.rabbitt.gotmytrip.RentalPackage.BookBottomSheet;
 import com.rabbitt.gotmytrip.R;
 
 import java.text.SimpleDateFormat;
