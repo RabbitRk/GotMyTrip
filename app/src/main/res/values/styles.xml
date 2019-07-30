@@ -48,12 +48,13 @@
 
     <style name="Login_page.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Login_page.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <!--<style name="MyNavigation" parent="Widget.Design.BottomNavigationView">-->
-    <!--<item name="android:typeface">serif</item>-->
-    <!--<item name="android:textSize">14sp</item>-->
-    <!--<item name="android:drawableTop">10dp</item>-->
-    <!--</style>-->
+    <style name="Login_page.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        <!--<style name="MyNavigation" parent="Widget.Design.BottomNavigationView">-->
+        <!--<item name="android:typeface">serif</item>-->
+        <!--<item name="android:textSize">14sp</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:drawableTop">10dp</item>-->
+    </style>
 
     <style name="BottomNavigation">
         <item name="android:background">@color/bottom_nav_color</item>
