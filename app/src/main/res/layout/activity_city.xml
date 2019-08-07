@@ -351,7 +351,7 @@
                             android:layout_marginTop="20dp"
                             android:layout_marginEnd="30dp"
                             android:background="@color/colorPrimaryDark"
-                            android:onClick="login"
+                            android:onClick="confirmBooking"
                             android:text="Book Now"
                             android:textColor="@color/text_color"
                             android:textStyle="bold" />

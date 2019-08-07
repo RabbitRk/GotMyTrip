@@ -1,20 +1,46 @@
 package com.rabbitt.gotmytrip.CityPackage;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.rabbitt.gotmytrip.Config;
 import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.R;
+import com.rabbitt.gotmytrip.VolleySingleton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_NAME;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
 public class CityActivity extends AppCompatActivity {
 
-    Boolean check_time = false, check_date = false;
     String pickupLocation, dropLocation, dateon, timeat;
     String oriLat, oriLng, destLat, destLng, travel_type;
     String userid = "", v_type = "";
@@ -24,7 +50,6 @@ public class CityActivity extends AppCompatActivity {
     String user_id;
     TextView pickupLocTxt, dateonTxt, timeatTxt, changeval, fareTxt, distanceTxt, durationTxt, dropLocTxt;
     //    ListView listView;
-    String packageid;
     dbHelper yourrides;
     String datetime;
     SharedPreferences userpref;
@@ -54,12 +79,255 @@ public class CityActivity extends AppCompatActivity {
 //      getting shared preferences
         SharedPreferences userpref;
         userpref = getSharedPreferences(USER_PREFS, MODE_PRIVATE);
+        userid = userpref.getString(USER_NAME, "");
 
-    }
 
-    public void login(View view) {
+        Intent intent = getIntent();
+        pickupLocation = intent.getStringExtra("pick_up");
+        dropLocation = intent.getStringExtra("drop");
+        dateon = intent.getStringExtra("date");
+        timeat = intent.getStringExtra("time");
+        v_type = intent.getStringExtra("v_type");
+        travel_type = intent.getStringExtra("travel_type");
+        oriLat = intent.getStringExtra("ori_lat");
+        oriLng = intent.getStringExtra("ori_lng");
+        destLat = intent.getStringExtra("dest_lat");
+        destLng = intent.getStringExtra("dest_lng");
+
+        //initializing textviews
+        pickupLocTxt.setText(pickupLocation);
+        dropLocTxt.setText(dropLocation);
+        dateonTxt.setText(dateon);
+        timeatTxt.setText(timeat);
+
+        //initialiseing databse
+        yourrides = new dbHelper(this);
+
+        switch (v_type) {
+            case "Auto":
+                v_type = "1";
+                break;
+            case "Prime":
+                v_type = "2";
+                break;
+            case "SUV":
+                v_type = "3";
+                break;
+            default:
+                break;
+        }
+
+        getuserPrefs();
+        getCurrentDateTime();
+        getDetails();
     }
 
     public void timeChange(View view) {
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        final TimePickerDialog timePickerDialog2 = new TimePickerDialog(CityActivity.this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @SuppressLint("DefaultLocale")
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        timeatTxt.setText(hourOfDay + ":" + minute);
+                    }
+
+                }, mHour, mMinute, false);
+        timePickerDialog2.show();
+        final DatePickerDialog datePickerDialog2 = new DatePickerDialog(CityActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        dateonTxt.setText(String.format("%d-%d-%d", dayOfMonth, monthOfYear + 1, year));
+//                                Toast.makeText(RentalView.this,dayOfMonth + "-" + (monthOfYear + 1) + "-" + year,Toast.LENGTH_SHORT).show();
+                    }
+
+                }, mYear, mMonth, mDay);
+
+
+        datePickerDialog2.show();
     }
+
+    private void getCurrentDateTime() {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dft = new SimpleDateFormat("HH:mm");
+        String rideNow_date = df.format(c.getTime());
+        String rideNow_time = dft.format(c.getTime());
+        dateonTxt.setText(rideNow_date);
+        timeatTxt.setText(rideNow_time);
+    }
+
+    private void getuserPrefs() {
+        userpref = getSharedPreferences(USER_PREFS, MODE_PRIVATE);
+
+        user_id = userpref.getString(USER_NAME, "");
+
+        if ("".equals(user_id)) {
+            Toast.makeText(this, "User ID is not valid", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getDetails() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.USER_LOGIN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (!response.equals("")) {
+                    Log.i("Responce.............", response);
+                    try {
+                        JSONArray arr = new JSONArray(response);
+                        JSONObject jb = arr.getJSONObject(0);
+                        distanceto = jb.getString("distance");
+                        duration = jb.getString("duration");
+                        base_fare = jb.getString("fare");
+
+                        distanceTxt.setText(distanceto);
+                        durationTxt.setText(duration);
+                        fareTxt.setText(String.valueOf(base_fare));
+
+                        Log.i("distance.......", distanceto);
+                        Log.i("duration.......", duration);
+                        Log.i("fare.......", base_fare);
+
+                    } catch (JSONException e) {
+                        Log.i("Error on catch.....", e.getMessage());
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.i("Responce.............", response);
+                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error", "volley response error");
+                Toast.makeText(getApplicationContext(), "Responce error failed   " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("ORIGIN_LAT", oriLat);
+                params.put("ORIGIN_LNG", oriLng);
+                params.put("DESTINATION_LAT", destLat);
+                params.put("DESTINATION_LNG", destLng);
+                params.put("VEHICLE_TYPE", v_type);
+
+                Log.i("ORIGIN_LAT", oriLat);
+                Log.i("ORIGIN_LNG", oriLng);
+                Log.i("DESTINATION_LAT", destLat);
+                Log.i("DESTINATION_LNG", destLng);
+                Log.i("VEHICLE_TYPE", v_type);
+                return params;
+            }
+        };
+
+        //inseting into  the iteluser table
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+    }
+
+    public void confirmBooking(View view) {
+        reg();
+    }
+
+    private void reg() {
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.city_booking_confirm, null);
+        final TextView basefareTxt = alertLayout.findViewById(R.id.baseFare);
+        final TextView durationTxt = alertLayout.findViewById(R.id.duration);
+        final TextView distanceTxt = alertLayout.findViewById(R.id.distance);
+
+        basefareTxt.setText(base_fare);
+        durationTxt.setText(duration);
+        distanceTxt.setText(distanceto);
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Info");
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+        // disallow cancel of AlertDialog on click of back button and outside touch
+        alert.setCancelable(false);
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getBaseContext(), "Cancel clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                citybooking();
+            }
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
+    }
+
+    private void citybooking() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.CUSTOMER_CITY_BOOK, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.i("Responce.............", response);
+
+                if (response.equals("success")) {
+                    Toast.makeText(getApplicationContext(), "Booked Successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.i("Responce.............", response);
+                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed..." + response, Toast.LENGTH_SHORT).show();
+                    yourRides();
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error", "volley response error");
+                Toast.makeText(getApplicationContext(), "Responce error failed   " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("CUS_ID", user_id);
+                params.put("ORIGIN", pickupLocation);
+                params.put("DESTINATION", dropLocation);
+                params.put("BASE_FARE", base_fare);
+                params.put("KMETER", distanceto);
+                params.put("VEHICLE_ID", v_type);
+
+                return params;
+            }
+        };
+
+        //inseting into  the iteluser table
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void yourRides() {
+        yourrides.insertdata(user_id,datetime, "City",v_type, pickupLocation,dropLocation);
+        Log.i("value","inserted");
+    }
+
 }
