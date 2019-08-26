@@ -1,5 +1,6 @@
 package com.rabbitt.gotmytrip;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -7,13 +8,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,16 +28,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.rabbitt.gotmytrip.RentalPackage.BookBottomSheet;
 import com.rabbitt.gotmytrip.CityPackage.cityBottomsheet;
 import com.rabbitt.gotmytrip.MapPackage.CustomMapFragment;
 import com.rabbitt.gotmytrip.MapPackage.MapWrapperLayout;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
+import com.rabbitt.gotmytrip.RentalPackage.BookBottomSheet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,13 +50,15 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.INTERNET;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, MapWrapperLayout.OnDragListener, GoogleMap.OnCameraMoveListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, MapWrapperLayout.OnDragListener, GoogleMap.OnCameraMoveListener, LocationListener {
 
-    private static final String TAG = "MainActivity";
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleMap mMap;
 
     //Request Codes
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private static final String TAG = "MapActivity";
+
     TextView pickupLocTxt, dropLocTxt;
     Button rent_button, city_button, outstation_button;
     BottomNavigationView bottomNavigationView;
@@ -60,13 +67,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean isUp;
     //Type Variable says about rent or city or out
     String type;
-//    View myView;
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+    boolean visible;
+    ViewGroup transitionsContainer;
+    GoogleApiClient mGoogleApiClient;
+    //    View myView;
+    LatLng onload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        if (!checkPermission()) {
+            requestPermission();
+        }
 
         //denote user visit this page
         PrefsManager prefsManager = new PrefsManager(getApplicationContext());
@@ -85,8 +102,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }).start();
 
+//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (locationManager != null) {
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+//        }
+
+
         turnOnGPS();
     }
+
 
     private void initializeUI() {
 
@@ -94,7 +118,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             // Loading map
             Log.i(TAG, "initializeUI: ");
             initilizeMap();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,14 +136,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         rent_button = findViewById(R.id.rental);
         city_button = findViewById(R.id.city);
         outstation_button = findViewById(R.id.outstation);
+
+        transitionsContainer = findViewById(R.id.transitions_container);
     }
 
     private void initilizeMap() {
         Log.i(TAG, "initilizeMap: ");
         if (mMap == null) {
+            Log.i(TAG, "initilizeMap: Inside");
             CustomMapFragment mCustomMapFragment = ((CustomMapFragment) getFragmentManager().findFragmentById(R.id.map));
             mCustomMapFragment.setOnDragListener(MapsActivity.this);
             mCustomMapFragment.getMapAsync(this);
+
 
             // check if map is created successfully or not
             if (mMap == null) {
@@ -190,10 +217,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "onMapReady: ");
         this.mMap = googleMap;
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(onload));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
     }
 
     private void turnOnGPS() {
@@ -317,7 +347,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
         } else {
+
             slideUp(bottomNavigationView);
+
             switch (view.getId()) {
                 case R.id.rental:
 
@@ -351,7 +383,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
         }
-        isUp = !isUp;
+//        isUp = !isUp;
     }
 
     private void getOutstation(String type) {
@@ -359,10 +391,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void slideDown(View view) {
-        bottomNavigationView.setVisibility(View.GONE);
-        TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
-        animate.setDuration(500);
-        view.startAnimation(animate);
+        view.setVisibility(View.GONE);
+        isUp = false;
+//        TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
+//        animate.setDuration(500);
+//        view.startAnimation(animate);
     }
 
     private void dropVisiblity(String type) {
@@ -372,9 +405,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     dropLocTxt.setVisibility(View.GONE);
                 break;
             case "city":
-                if (dropLocTxt.getVisibility() == View.GONE)
-                    dropLocTxt.setVisibility(View.VISIBLE);
-                break;
             case "outstation":
                 if (dropLocTxt.getVisibility() == View.GONE)
                     dropLocTxt.setVisibility(View.VISIBLE);
@@ -382,14 +412,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-
     public void disableAuto(boolean val) {
         if (val)
             bottomNavigationView.getMenu().getItem(0).setVisible(true);
         else
             bottomNavigationView.getMenu().getItem(0).setVisible(false);
     }
-
 
     private void getCitynavigation(final String type) {
 
@@ -441,7 +469,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-
     private void getRentalnavigation(String typeof) {
 
         Log.i("my_tag", "Welcome");
@@ -490,14 +517,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void slideUp(View view) {
         view.setVisibility(View.VISIBLE);
-        TranslateAnimation animate = new TranslateAnimation(
-                0,                 // fromXDelta
-                0,                 // toXDelta
-                view.getHeight(),  // fromYDelta
-                0);                // toYDelta
-        animate.setDuration(500);
-        animate.setFillAfter(true);
-        view.startAnimation(animate);
+        isUp = true;
+
+//        TranslateAnimation animate = new TranslateAnimation(
+//                0,                 // fromXDelta
+//                0,                 // toXDelta
+//                view.getHeight(),  // fromYDelta
+//                0);                // toYDelta
+//        animate.setDuration(500);
+//        animate.setFillAfter(true);
+//        view.startAnimation(animate);
+//        TransitionSet set = new TransitionSet()
+//                .addTransition(new Scale(0.7f))
+//                .addTransition(new Fade())
+//                .setInterpolator(visible ? new LinearOutSlowInInterpolator() : new FastOutLinearInInterpolator());
+//
+//        TransitionManager.beginDelayedTransition(transitionsContainer, set);
+//        view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        //Place current location marker
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        //move map camerax
+        Log.i(TAG, "onLocationChanged: "+latLng.toString());
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+        Log.d("Latitude","status");
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+        Log.d("Latitude","enable");
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+        Log.d("Latitude","disable");
+    }
 }

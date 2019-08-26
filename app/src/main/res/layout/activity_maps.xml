@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/transitions_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
@@ -194,12 +195,14 @@
     </LinearLayout>
 
     <!--Vehicle Category-->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <fragment
         android:id="@+id/navigationView"
         style="@style/BottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btn_nav_bar"
+        android:layout_height="49dp"
+        android:layout_above="@+id/btn_nav_bar"
+        android:layout_below="@+id/cardview"
+        android:layout_marginTop="455dp"
         android:layout_marginBottom="2dp"
         android:background="@color/bgcolor"
         app:itemIconSize="30dp"

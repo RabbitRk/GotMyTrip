@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "190021606340",
+    "firebase_url": "https://gmtdriver-10ed2.firebaseio.com",
+    "project_id": "gmtdriver-10ed2",
+    "storage_bucket": "gmtdriver-10ed2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190021606340:android:ec647aa8cd9bff96",
+        "android_client_info": {
+          "package_name": "com.rabbitt.gotmytrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190021606340-4b2o2ufjth0f7aoajls9d29gohjcd2hj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rabbitt.gotmytrip",
+            "certificate_hash": "aba49910ceea5daf36e01e2eaa0befda2e35fef9"
+          }
+        },
+        {
+          "client_id": "190021606340-5dlg0nu1s2l4qhob5ajecvk2fgenlmqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFq6c_9modpKK-hK3SUaDzf4eKdy6Zvro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190021606340-5dlg0nu1s2l4qhob5ajecvk2fgenlmqr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

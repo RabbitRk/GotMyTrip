@@ -22,11 +22,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:fullBackupContent="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TermsActivity"></activity>
+
+        <activity android:name=".TermsActivity" />
         <activity android:name=".OtpActivity" />
         <activity android:name=".Forgot_password" />
-        <activity android:name=".CityPackage.CityActivity" />
+        <activity android:name=".CityPackage.CityActivity"
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".OutstationPackage.OutstationAcitvity"
             tools:ignore="InnerclassSeparator" />
