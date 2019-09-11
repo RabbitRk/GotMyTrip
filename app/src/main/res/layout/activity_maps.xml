@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:id="@+id/transitions_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/transitions_container"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <fragment
@@ -14,57 +14,100 @@
         tools:context=".MapsActivity" />
 
     <!--Layout Title-->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:id="@+id/v_type"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:cardBackgroundColor="@color/menu_bar_color"
-        app:contentPaddingLeft="10dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_nav_bar"
+        android:orientation="horizontal"
+        android:visibility="gone" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/rental1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:background="@color/bgcolor"
+            android:drawableStart="@drawable/ic_taxi"
+            android:letterSpacing="0.05"
+            android:text="Prime"
+            android:textAllCaps="false"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
 
-            <!--Open side navigation bar-->
-            <ImageButton
-                android:id="@+id/nav_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:background="@drawable/ic_drawer"
-                tools:ignore="ContentDescription" />
+        <Button
+            android:id="@+id/rental3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/bgcolor"
+            android:drawableStart="@drawable/ic_out_car_model"
+            android:letterSpacing="0.05"
+            android:text="SUV"
+            android:textAllCaps="false"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-            <!--App title-->
-            <TextView
-                android:id="@+id/appname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:text="@string/gmt"
-                android:textColor="@color/text_color"
-                android:textSize="18sp" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent" />
 
-        </LinearLayout>
+    </LinearLayout>
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:elevation="4dp"-->
+<!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+<!--        app:cardBackgroundColor="@color/menu_bar_color"-->
+<!--        app:contentPaddingLeft="10dp"-->
+<!--        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            &lt;!&ndash;Open side navigation bar&ndash;&gt;-->
+<!--            <ImageButton-->
+<!--                android:id="@+id/nav_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="start|center_vertical"-->
+<!--                android:background="@drawable/ic_drawer"-->
+<!--                tools:ignore="ContentDescription" />-->
+
+<!--            &lt;!&ndash;App title&ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/appname"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="30dp"-->
+<!--                android:text="@string/gmt"-->
+<!--                android:textColor="@color/text_color"-->
+<!--                android:textSize="18sp" />-->
+
+<!--        </LinearLayout>-->
 
 
-    </androidx.cardview.widget.CardView>
+<!--    </androidx.cardview.widget.CardView>-->
 
     <!--Main Cardview-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:clipToPadding="false"
+        android:layout_below="@+id/toolbar"
         app:cardBackgroundColor="@color/bgcolor"
         app:cardElevation="10dp"
         app:cardPreventCornerOverlap="false"
@@ -89,7 +132,6 @@
                     android:layout_margin="1dp"
                     android:background="@drawable/textview_border"
                     android:drawableStart="@drawable/pick"
-                    android:fontFamily="sans_serif"
                     android:gravity="center|center_vertical"
                     android:hint="@string/pick_up_location"
                     android:letterSpacing="0.05"
@@ -116,7 +158,6 @@
                     android:layout_margin="1dp"
                     android:background="@drawable/textview_border"
                     android:drawableStart="@drawable/drop"
-                    android:fontFamily="sans_serif"
                     android:gravity="center|center_vertical"
                     android:hint="@string/drop_location"
                     android:letterSpacing="0.05"
@@ -131,6 +172,23 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Login_page.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tool"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimaryDark"
+            app:popupTheme="@style/Login_page.PopupOverlay"
+            app:title="GMT" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <!--Types of ride-->
     <LinearLayout
@@ -195,34 +253,35 @@
     </LinearLayout>
 
     <!--Vehicle Category-->
-    <fragment
-        android:id="@+id/navigationView"
-        style="@style/BottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:layout_above="@+id/btn_nav_bar"
-        android:layout_below="@+id/cardview"
-        android:layout_marginTop="455dp"
-        android:layout_marginBottom="2dp"
-        android:background="@color/bgcolor"
-        app:itemIconSize="30dp"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextAppearanceActive="@style/NavigationDrawerStyle3"
-        app:itemTextAppearanceInactive="@style/NavigationDrawerStyle2"
-        app:menu="@menu/btm_nav" />
+
+<!--    <android.support.design.widget.BottomNavigationView-->
+<!--        android:id="@+id/navigationView"-->
+<!--        style="@style/BottomNavigation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_above="@+id/btn_nav_bar"-->
+<!--        android:layout_below="@+id/cardview"-->
+<!--        android:layout_marginTop="455dp"-->
+<!--        android:layout_marginBottom="2dp"-->
+<!--        android:background="@color/bgcolor"-->
+<!--        app:itemIconSize="30dp"-->
+<!--        app:itemIconTint="@color/colorAccent"-->
+<!--        app:itemTextAppearanceActive="@style/NavigationDrawerStyle3"-->
+<!--        app:itemTextAppearanceInactive="@style/NavigationDrawerStyle2"-->
+<!--        app:menu="@menu/btm_nav" />-->
 
     <!--Side navigation bar-->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/bgcolor"
-        android:visibility="gone"
-        app:headerLayout="@layout/nav_header"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextAppearance="@style/NavigationDrawerStyle"
-        app:itemTextColor="#fff"
-        app:menu="@menu/drawer_menu" />
+<!--    <android.material.navigation.NavigationView-->
+<!--        android:id="@+id/nav_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:background="@color/bgcolor"-->
+<!--        android:visibility="gone"-->
+<!--        app:headerLayout="@layout/nav_header"-->
+<!--        app:itemIconTint="@color/colorAccent"-->
+<!--        app:itemTextAppearance="@style/NavigationDrawerStyle"-->
+<!--        app:itemTextColor="#fff"-->
+<!--        app:menu="@menu/drawer_menu" />-->
 
 </RelativeLayout>

@@ -52,8 +52,7 @@ import static android.Manifest.permission.INTERNET;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, MapWrapperLayout.OnDragListener, GoogleMap.OnCameraMoveListener, LocationListener {
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    GoogleMap mMap;
+     GoogleMap mMap;
 
     //Request Codes
     private static final int PERMISSION_REQUEST_CODE = 200;
@@ -61,19 +60,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     TextView pickupLocTxt, dropLocTxt;
     Button rent_button, city_button, outstation_button;
-    BottomNavigationView bottomNavigationView;
+    LinearLayout bottomNavigationView;
     LinearLayout travel_type;
     int trance = 0;
     boolean isUp;
     //Type Variable says about rent or city or out
     String type;
-    protected LocationManager locationManager;
-    protected LocationListener locationListener;
-    boolean visible;
     ViewGroup transitionsContainer;
-    GoogleApiClient mGoogleApiClient;
-    //    View myView;
-    LatLng onload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +100,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 //        }
 
-
         turnOnGPS();
     }
 
@@ -129,14 +121,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        First time view
         dropLocTxt.setVisibility(View.GONE);
 
-        bottomNavigationView = findViewById(R.id.navigationView);
-        bottomNavigationView.setVisibility(View.GONE);
+//        bottomNavigationView = findViewById(R.id.navigationView);
+//        bottomNavigationView.setVisibility(View.GONE);
 //        ridelater = findViewById(R.id.button3);
+
         travel_type = findViewById(R.id.btn_nav_bar);
         rent_button = findViewById(R.id.rental);
         city_button = findViewById(R.id.city);
         outstation_button = findViewById(R.id.outstation);
-
+        bottomNavigationView = findViewById(R.id.v_type);
         transitionsContainer = findViewById(R.id.transitions_container);
     }
 
@@ -222,8 +215,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "onMapReady: ");
         this.mMap = googleMap;
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(onload));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(onload));
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
     }
 
     private void turnOnGPS() {
@@ -412,34 +405,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void disableAuto(boolean val) {
-        if (val)
-            bottomNavigationView.getMenu().getItem(0).setVisible(true);
-        else
-            bottomNavigationView.getMenu().getItem(0).setVisible(false);
-    }
+//    public void disableAuto(boolean val) {
+//        if (val)
+//            bottomNavigationView.getMenu().getItem(0).setVisible(true);
+//        else
+//            bottomNavigationView.getMenu().getItem(0).setVisible(false);
+//    }
 
     private void getCitynavigation(final String type) {
 
         Log.i("my_tag", "Welcome");
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnClickListener(new LinearLayout.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Log.i("my_tag", "Welcome2");
-                switch (menuItem.getTitle().toString()) {
-                    case "Auto":
-                        cityBottomsheet bottomSheet = new cityBottomsheet();
-                        Bundle bundle0 = new Bundle();
-                        bundle0.putString("pickn", pickupLocTxt.getText().toString());
-                        bundle0.putString("dropn", dropLocTxt.getText().toString());
-                        bundle0.putString("vehicle", "Auto");
-                        bundle0.putString("travel_type", type);
-                        bundle0.putString("base_fare", "35");
-                        bottomSheet.setArguments(bundle0);
-                        bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
-                        break;
+            public void onClick(View view) {
 
-                    case "Prime":
+                switch (view.getId())
+                {
+                    case R.id.rental1:
                         cityBottomsheet bottomSheet1 = new cityBottomsheet();
                         Bundle bundle = new Bundle();
                         bundle.putString("pickn", pickupLocTxt.getText().toString());
@@ -451,8 +433,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
                         break;
 
-                    case "SUV":
-
+                    case R.id.rental3:
                         cityBottomsheet bottomSheet2 = new cityBottomsheet();
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("pickn", pickupLocTxt.getText().toString());
@@ -464,7 +445,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
                         break;
                 }
-                return true;
             }
         });
     }
@@ -472,45 +452,34 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void getRentalnavigation(String typeof) {
 
         Log.i("my_tag", "Welcome");
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Log.i("my_tag", "Welcome2");
-                switch (menuItem.getTitle().toString()) {
-                    case "Auto":
-                        AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-                        alertDialog.setMessage("Auto is not provided for Rental");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
-                        break;
-                    case "Prime":
-                        BookBottomSheet bottomSheet1 = new BookBottomSheet();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("pickn", pickupLocTxt.getText().toString());
-                        bundle.putString("vehicle", "Prime");
-                        bundle.putString("travel_type", type);
-                        bundle.putString("base_fare", "399");
-                        bottomSheet1.setArguments(bundle);
-                        bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
-                        break;
+        bottomNavigationView.setOnClickListener(new LinearLayout.OnClickListener() {
 
-                    case "SUV":
-                        BookBottomSheet bottomSheet2 = new BookBottomSheet();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("pickn", pickupLocTxt.getText().toString());
-                        bundle1.putString("vehicle", "SUV");
-                        bundle1.putString("travel_type", type);
-                        bundle1.putString("base_fare", "599");
-                        bottomSheet2.setArguments(bundle1);
-                        bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
-                        break;
-                }
-                return true;
+            @Override
+            public void onClick(View view) {
+               switch (view.getId())
+               {
+                   case R.id.rental1:
+                       BookBottomSheet bottomSheet1 = new BookBottomSheet();
+                       Bundle bundle = new Bundle();
+                       bundle.putString("pickn", pickupLocTxt.getText().toString());
+                       bundle.putString("vehicle", "Prime");
+                       bundle.putString("travel_type", type);
+                       bundle.putString("base_fare", "399");
+                       bottomSheet1.setArguments(bundle);
+                       bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
+                       break;
+
+                   case R.id.rental3:
+                       BookBottomSheet bottomSheet2 = new BookBottomSheet();
+                       Bundle bundle1 = new Bundle();
+                       bundle1.putString("pickn", pickupLocTxt.getText().toString());
+                       bundle1.putString("vehicle", "SUV");
+                       bundle1.putString("travel_type", type);
+                       bundle1.putString("base_fare", "599");
+                       bottomSheet2.setArguments(bundle1);
+                       bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
+                       break;
+               }
             }
         });
     }
@@ -562,3 +531,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("Latitude","disable");
     }
 }
+
+//                    case "Auto":
+//                        cityBottomsheet bottomSheet = new cityBottomsheet();
+//                        Bundle bundle0 = new Bundle();
+//                        bundle0.putString("pickn", pickupLocTxt.getText().toString());
+//                        bundle0.putString("dropn", dropLocTxt.getText().toString());
+//                        bundle0.putString("vehicle", "Auto");
+//                        bundle0.putString("travel_type", type);
+//                        bundle0.putString("base_fare", "35");
+//                        bottomSheet.setArguments(bundle0);
+//                        bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
+//                        break;
