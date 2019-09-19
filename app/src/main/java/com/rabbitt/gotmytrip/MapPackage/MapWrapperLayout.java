@@ -36,8 +36,8 @@ public class MapWrapperLayout extends FrameLayout {
             mCanvas = canvas;
         }
         if (currentImage != null) {
-            canvas.drawBitmap(currentImage, (canvas.getWidth() - currentImage.getWidth()) / 2,
-                    (canvas.getHeight() - 2 * currentImage.getHeight()) / 2, paint);
+            canvas.drawBitmap(currentImage, (getWidth() - currentImage.getWidth()) / 2,
+                    (getHeight() - 2 * currentImage.getHeight()) / 2, paint);
         }
     }
 

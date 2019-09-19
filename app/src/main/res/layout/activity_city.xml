@@ -25,7 +25,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:popupTheme="@style/Login_page.PopupOverlay"
-            app:titleTextColor="@color/colorPrimaryDark">
+            app:title="City Booking"
+            app:titleTextColor="@color/text_color">
 
         </androidx.appcompat.widget.Toolbar>
 

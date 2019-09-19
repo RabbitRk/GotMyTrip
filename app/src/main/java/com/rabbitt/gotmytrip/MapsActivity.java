@@ -13,7 +13,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,21 +22,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.rabbitt.gotmytrip.CityPackage.cityBottomsheet;
 import com.rabbitt.gotmytrip.MapPackage.CustomMapFragment;
 import com.rabbitt.gotmytrip.MapPackage.MapWrapperLayout;
+import com.rabbitt.gotmytrip.OutstationPackage.outstationBottomSheet;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.RentalPackage.BookBottomSheet;
 
@@ -50,7 +52,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.INTERNET;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, MapWrapperLayout.OnDragListener, GoogleMap.OnCameraMoveListener, LocationListener {
+public class MapsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, MapWrapperLayout.OnDragListener, GoogleMap.OnCameraMoveListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, BookBottomSheet.BottomSheetListener {
 
      GoogleMap mMap;
 
@@ -60,6 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     TextView pickupLocTxt, dropLocTxt;
     Button rent_button, city_button, outstation_button;
+    Button prime, suv;
     LinearLayout bottomNavigationView;
     LinearLayout travel_type;
     int trance = 0;
@@ -67,6 +70,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //Type Variable says about rent or city or out
     String type;
     ViewGroup transitionsContainer;
+    GoogleApiClient googleApiClient;
+    LocationManager locationManager;
+    Boolean ren = false, cit = false, out = false;
+    LatLng origin, dest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +102,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }).start();
 
-//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        if (locationManager != null) {
-//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-//        }
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }
 
         turnOnGPS();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+//        getCurrentLocation();
     }
+
+//    private void getCurrentLocation() {
+//        Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+//        if (location != null) {
+//            //Getting longitude and latitude
+//            longitude = location.getLongitude();
+//            latitude = location.getLatitude();
+//
+//
+//
+//            //moving the map to location
+////            moveMap();
+//        }
+//    }
 
 
     private void initializeUI() {
@@ -117,6 +146,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        Ui initilization
         dropLocTxt = findViewById(R.id.dropLocation);
         pickupLocTxt = findViewById(R.id.pickupLocation);
+        prime = findViewById(R.id.prime);
+        suv = findViewById(R.id.suv);
 
 //        First time view
         dropLocTxt.setVisibility(View.GONE);
@@ -131,6 +162,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         outstation_button = findViewById(R.id.outstation);
         bottomNavigationView = findViewById(R.id.v_type);
         transitionsContainer = findViewById(R.id.transitions_container);
+
+        //onclick listener
+        suv.setOnClickListener(this);
+        prime.setOnClickListener(this);
     }
 
     private void initilizeMap() {
@@ -203,8 +238,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 if (trance == 0) {
                     pickupLocTxt.setText(completeAddress);
+                    origin = centerLatLng;
                 } else {
                     dropLocTxt.setText(completeAddress);
+                    dest = centerLatLng;
                 }
             }
         }
@@ -215,8 +252,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "onMapReady: ");
         this.mMap = googleMap;
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location != null) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 20.0f));
+        }
+//        else
+//        {
+//            Log.i(TAG, "onMapReady: "+location);
+//        }
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(onload));
 //        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+        googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+//Says about the Visibility of Cardview & Recycler View
+                if (isUp) {
+                    isUp = false;
+                    slideDown(bottomNavigationView);
+                }
+                if (travel_type.getVisibility() == View.VISIBLE) {
+                    travel_type.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                if (travel_type.getVisibility() == View.GONE)
+                    travel_type.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void turnOnGPS() {
@@ -292,7 +359,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
-
     }
 
     @Override
@@ -304,11 +370,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //  Permission Checking Area-End
 
     public void Searchpickup(View view) {
-        Toast.makeText(this, "pick up location", Toast.LENGTH_SHORT).show();
+        trance = 0;
+        if (!pickupLocTxt.getText().equals("")) {
+            Toast.makeText(this, pickupLocTxt.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void Searchdrop(View view) {
-        Toast.makeText(this, "drop location", Toast.LENGTH_SHORT).show();
+        trance = 1;
+        if (!dropLocTxt.getText().equals("")) {
+            Toast.makeText(this, dropLocTxt.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onSlideViewButtonClick(View view) {
@@ -320,68 +392,78 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     rent_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "rental";
                     dropVisiblity(type);
-                    getRentalnavigation(type);
+//                    getRentalnavigation(type);
+                    ren = true;
+                    cit = false;
+                    out = false;
                     slideDown(bottomNavigationView);
                     break;
                 case R.id.city:
                     city_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "city";
                     dropVisiblity(type);
-                    getCitynavigation(type);
+//                    getCitynavigation(type);
+                    ren = false;
+                    cit = true;
+                    out = false;
                     slideDown(bottomNavigationView);
                     break;
                 case R.id.outstation:
                     outstation_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "outstation";
                     dropVisiblity(type);
-                    getOutstation(type);
+//                    getOutstation(type);
+                    ren = false;
+                    cit = false;
+                    out = true;
                     slideDown(bottomNavigationView);
                     break;
             }
 
         } else {
-
             slideUp(bottomNavigationView);
-
             switch (view.getId()) {
                 case R.id.rental:
-
                     rent_button.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                     city_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     outstation_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "rental";
                     dropVisiblity(type);
-                    getRentalnavigation(type);
+//                    getRentalnavigation(type);
+                    ren = true;
+                    cit = false;
+                    out = false;
                     break;
 
                 case R.id.city:
-
                     city_button.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                     rent_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     outstation_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "city";
                     dropVisiblity(type);
-                    getCitynavigation(type);
+//                    getCitynavigation(type);
+                    ren = false;
+                    cit = true;
+                    out = false;
+
                     break;
 
                 case R.id.outstation:
-
                     outstation_button.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                     city_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     rent_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "outstation";
                     dropVisiblity(type);
-                    getOutstation(type);
+//                    getOutstation(type);
+                    ren = false;
+                    cit = false;
+                    out = true;
                     break;
             }
-
         }
-//        isUp = !isUp;
+        isUp = !isUp;
     }
 
-    private void getOutstation(String type) {
-
-    }
 
     private void slideDown(View view) {
         view.setVisibility(View.GONE);
@@ -412,78 +494,93 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            bottomNavigationView.getMenu().getItem(0).setVisible(false);
 //    }
 
-    private void getCitynavigation(final String type) {
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.prime:
 
-        Log.i("my_tag", "Welcome");
-        bottomNavigationView.setOnClickListener(new LinearLayout.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                switch (view.getId())
-                {
-                    case R.id.rental1:
-                        cityBottomsheet bottomSheet1 = new cityBottomsheet();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("pickn", pickupLocTxt.getText().toString());
-                        bundle.putString("dropn", dropLocTxt.getText().toString());
-                        bundle.putString("base_fare", "150");
-                        bundle.putString("vehicle", "Prime");
-                        bundle.putString("travel_type", type);
-                        bottomSheet1.setArguments(bundle);
-                        bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
-                        break;
-
-                    case R.id.rental3:
-                        cityBottomsheet bottomSheet2 = new cityBottomsheet();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("pickn", pickupLocTxt.getText().toString());
-                        bundle1.putString("dropn", dropLocTxt.getText().toString());
-                        bundle1.putString("base_fare", "200");
-                        bundle1.putString("vehicle", "SUV");
-                        bundle1.putString("travel_type", type);
-                        bottomSheet2.setArguments(bundle1);
-                        bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
-                        break;
+                if (ren){
+                    BookBottomSheet bottomSheet1 = new BookBottomSheet();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("pickn", pickupLocTxt.getText().toString());
+                    bundle.putString("vehicle", "Prime");
+                    bundle.putString("travel_type", type);
+                    bundle.putString("base_fare", "399");
+                    bottomSheet1.setArguments(bundle);
+                    bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
                 }
-            }
-        });
+                else if (cit)
+                {
+                    cityBottomsheet bottomSheet1 = new cityBottomsheet();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("pickn", pickupLocTxt.getText().toString());
+                    bundle.putString("dropn", dropLocTxt.getText().toString());
+                    bundle.putString("base_fare", "150");
+                    bundle.putString("vehicle", "Prime");
+                    bundle.putString("travel_type", type);
+                    bundle.putString("ori_lat", String.valueOf(origin.latitude));
+                    bundle.putString("ori_lng", String.valueOf(origin.longitude));
+                    bundle.putString("dest_lat", String.valueOf(dest.latitude));
+                    bundle.putString("dest_lng", String.valueOf(dest.longitude));
+
+                    bottomSheet1.setArguments(bundle);
+                    bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
+                }
+                else {
+                    outstationBottomSheet bottomSheet1 = new outstationBottomSheet();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("pickn", pickupLocTxt.getText().toString());
+                    bundle.putString("dropn", dropLocTxt.getText().toString());
+                    bundle.putString("vehicle", "Prime");
+                    bundle.putString("travel_type", type);
+                    bottomSheet1.setArguments(bundle);
+                    bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
+                }
+                break;
+
+            case R.id.suv:
+
+                if (ren){
+                    BookBottomSheet bottomSheet2 = new BookBottomSheet();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("pickn", pickupLocTxt.getText().toString());
+                    bundle1.putString("vehicle", "SUV");
+                    bundle1.putString("travel_type", type);
+                    bundle1.putString("base_fare", "599");
+                    bottomSheet2.setArguments(bundle1);
+                    bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
+                }
+                else if (cit)
+                {
+                    cityBottomsheet bottomSheet2 = new cityBottomsheet();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("pickn", pickupLocTxt.getText().toString());
+                    bundle1.putString("dropn", dropLocTxt.getText().toString());
+                    bundle1.putString("base_fare", "200");
+                    bundle1.putString("vehicle", "SUV");
+                    bundle1.putString("travel_type", type);
+                    bundle1.putString("ori_lat", String.valueOf(origin.latitude));
+                    bundle1.putString("ori_lng", String.valueOf(origin.longitude));
+                    bundle1.putString("dest_lat", String.valueOf(dest.latitude));
+                    bundle1.putString("dest_lng", String.valueOf(dest.longitude));
+                    bottomSheet2.setArguments(bundle1);
+                    bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
+                }
+                else {
+                    outstationBottomSheet bottomSheet2 = new outstationBottomSheet();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("pickn", pickupLocTxt.getText().toString());
+                    bundle1.putString("dropn", dropLocTxt.getText().toString());
+                    bundle1.putString("vehicle", "SUV");
+                    bundle1.putString("travel_type", type);
+                    bottomSheet2.setArguments(bundle1);
+                    bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
+                }
+
+                break;
+        }
     }
-
-    private void getRentalnavigation(String typeof) {
-
-        Log.i("my_tag", "Welcome");
-        bottomNavigationView.setOnClickListener(new LinearLayout.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-               switch (view.getId())
-               {
-                   case R.id.rental1:
-                       BookBottomSheet bottomSheet1 = new BookBottomSheet();
-                       Bundle bundle = new Bundle();
-                       bundle.putString("pickn", pickupLocTxt.getText().toString());
-                       bundle.putString("vehicle", "Prime");
-                       bundle.putString("travel_type", type);
-                       bundle.putString("base_fare", "399");
-                       bottomSheet1.setArguments(bundle);
-                       bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
-                       break;
-
-                   case R.id.rental3:
-                       BookBottomSheet bottomSheet2 = new BookBottomSheet();
-                       Bundle bundle1 = new Bundle();
-                       bundle1.putString("pickn", pickupLocTxt.getText().toString());
-                       bundle1.putString("vehicle", "SUV");
-                       bundle1.putString("travel_type", type);
-                       bundle1.putString("base_fare", "599");
-                       bottomSheet2.setArguments(bundle1);
-                       bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
-                       break;
-               }
-            }
-        });
-    }
-
     private void slideUp(View view) {
         view.setVisibility(View.VISIBLE);
         isUp = true;
@@ -529,6 +626,28 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onProviderDisabled(String s) {
         Log.d("Latitude","disable");
+    }
+
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onButtonClicked(String text) {
+
     }
 }
 

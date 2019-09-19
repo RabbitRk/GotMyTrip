@@ -23,7 +23,7 @@
         android:visibility="gone" >
 
         <Button
-            android:id="@+id/rental1"
+            android:id="@+id/prime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -37,7 +37,7 @@
             android:textStyle="bold"/>
 
         <Button
-            android:id="@+id/rental3"
+            android:id="@+id/suv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

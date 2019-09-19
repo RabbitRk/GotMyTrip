@@ -1,30 +1,16 @@
 package com.rabbitt.gotmytrip.Firebase;
 
-import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.rabbitt.gotmytrip.Config;
+
+import org.json.JSONObject;
 
 public class FirebaseMessengingService extends FirebaseMessagingService {
 
@@ -46,7 +32,7 @@ public class FirebaseMessengingService extends FirebaseMessagingService {
 
 
     @Override
-    public void onNewToken(String token) {
+    public void onNewToken(@NonNull String token) {
         Log.d(TAG, "Refreshed token: " + token);
 
         // If you want to send messages to this application instance or

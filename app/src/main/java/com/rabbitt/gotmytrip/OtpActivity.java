@@ -3,6 +3,7 @@ package com.rabbitt.gotmytrip;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class OtpActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     String otpLocal = "", phoneTxt = "";
     EditText tv;
+    String token;
     ProgressDialog loading;
 
     @Override
@@ -38,11 +40,23 @@ public class OtpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_otp);
 
         init();
+        getToken();
+    }
+
+    private void getToken() {
+        SharedPreferences sp;
+        sp = getSharedPreferences(Config.SHARED_PREF, MODE_PRIVATE);
+        token = sp.getString("token","");
+        if (token.equals(""))
+        {
+            Toast.makeText(this, "Firebase token is not registered", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void init() {
         Intent intent = getIntent();
         phoneTxt = intent.getStringExtra(RegisterActivity.PHONE_EXTRA);
+        tv = findViewById(R.id.otpTxt);
 
         Log.i(TAG, "Phone checking........................" + phoneTxt);
 
@@ -126,6 +140,7 @@ public class OtpActivity extends AppCompatActivity {
                 //Adding the parameters otp and username
                 params.put("cus_phone", phoneTxt);
                 params.put("otp", otpLocal);
+                params.put("token", token);
                 return params;
             }
         };

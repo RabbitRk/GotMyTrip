@@ -2,6 +2,7 @@ package com.rabbitt.gotmytrip.CityPackage;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -41,6 +42,7 @@ import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
 public class CityActivity extends AppCompatActivity {
 
+    private static final String TAG = "CityActivity";
     String pickupLocation, dropLocation, dateon, timeat;
     String oriLat, oriLng, destLat, destLng, travel_type;
     String userid = "", v_type = "";
@@ -60,6 +62,16 @@ public class CityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back_arrow); // your drawable
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // Implemented by activity
+            }
+        });
 
         init();
     }
@@ -93,6 +105,8 @@ public class CityActivity extends AppCompatActivity {
         oriLng = intent.getStringExtra("ori_lng");
         destLat = intent.getStringExtra("dest_lat");
         destLng = intent.getStringExtra("dest_lng");
+
+        Log.i(TAG, "init: "+" "+oriLat+" "+pickupLocation);
 
         //initializing textviews
         pickupLocTxt.setText(pickupLocation);
@@ -179,7 +193,7 @@ public class CityActivity extends AppCompatActivity {
 
     private void getDetails() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.USER_LOGIN, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.DISTANCE_CALC, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
