@@ -3,17 +3,14 @@
 
     <item
         android:id="@+id/navigation_songs"
-        android:icon="@drawable/ic_auto_rickshaw"
-        android:title="Auto"/>
+        android:title="My Rides" />
 
     <item
         android:id="@+id/navigation_albums"
-        android:icon="@drawable/ic_car_city_model"
-        android:title="Prime"/>
+        android:title="Settings" />
 
     <item
         android:id="@+id/navigation_artists"
-        android:icon="@drawable/ic_minivan_car"
-        android:title="SUV"/>
+        android:title="About us" />
 
 </menu>

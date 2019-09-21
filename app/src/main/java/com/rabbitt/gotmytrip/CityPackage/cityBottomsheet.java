@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.rabbitt.gotmytrip.CityPackage.CityActivity;
 import com.rabbitt.gotmytrip.R;
 
 public class cityBottomsheet extends BottomSheetDialogFragment {
@@ -43,8 +42,8 @@ public class cityBottomsheet extends BottomSheetDialogFragment {
         v_type = getArguments().getString("vehicle");
         type = getArguments().getString("travel_type");
         drop_loc = getArguments().getString("dropn");
-        ori_lat = getArguments().getString("ori_lat");
         String price = getArguments().getString("base_fare");
+        ori_lat = getArguments().getString("ori_lat");
         ori_lng = getArguments().getString("ori_lng");
         dest_lat = getArguments().getString("dest_lat");
         dest_lng = getArguments().getString("dest_lng");

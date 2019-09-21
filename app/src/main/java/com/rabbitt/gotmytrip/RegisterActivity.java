@@ -1,21 +1,21 @@
 package com.rabbitt.gotmytrip;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -151,11 +151,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void reg() {
+        setPrefsdetails();
         Intent ottp_page = new Intent(getApplicationContext(), OtpActivity.class);
         ottp_page.putExtra(PHONE_EXTRA, phoneTxt);
         startActivity(ottp_page);
         finish();
         Log.i(TAG, "json success.............................." + getId);
+    }
+
+    private void setPrefsdetails() {
+
+        PrefsManager prefsManager = new PrefsManager(this);
+        prefsManager.userPreferences(getId, userTxt, phoneTxt, emailTxt);
+        Log.i(TAG, "set preference Hid.............." + getId);
     }
 
     public void openTerms(View view) {

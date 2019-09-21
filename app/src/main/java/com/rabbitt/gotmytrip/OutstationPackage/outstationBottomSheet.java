@@ -23,8 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.rabbitt.gotmytrip.RentalPackage.BookBottomSheet;
 import com.rabbitt.gotmytrip.R;
+import com.rabbitt.gotmytrip.RentalPackage.BookBottomSheet;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -82,7 +82,7 @@ public class outstationBottomSheet extends BottomSheetDialogFragment {
                     String rideNow_date = df.format(c.getTime());
                     String rideNow_time = dft.format(c.getTime());
 
-                    Intent tocity = new Intent(getContext(), OutstationAcitvity.class);
+                    Intent tocity = new Intent(getContext(), OutstationActivity.class);
                     tocity.putExtra("pick_up", pick_up_loc);
                     tocity.putExtra("drop", drop_loc);
                     tocity.putExtra("v_type", v_type);
@@ -179,7 +179,7 @@ public class outstationBottomSheet extends BottomSheetDialogFragment {
 
     public void rideLaterIntent(String dateon, String timeat)
     {
-        Intent tocity = new Intent(getContext(), OutstationAcitvity.class);
+        Intent tocity = new Intent(getContext(), OutstationActivity.class);
         tocity.putExtra("pick_up", pick_up_loc);
         tocity.putExtra("drop", drop_loc);
         tocity.putExtra("v_type", v_type);

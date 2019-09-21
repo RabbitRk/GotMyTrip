@@ -74,6 +74,8 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     LocationManager locationManager;
     Boolean ren = false, cit = false, out = false;
     LatLng origin, dest;
+    Bitmap bitmap, bitmap1;
+    CustomMapFragment mCustomMapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,10 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         //denote user visit this page
         PrefsManager prefsManager = new PrefsManager(getApplicationContext());
         prefsManager.setFirstTimeLaunch(true);
+
+        //Marker Initializing
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marker);
+        bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.marker1);
 
         //Initilize UI
         initializeUI();
@@ -115,23 +121,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                 .addApi(LocationServices.API)
                 .build();
 
-//        getCurrentLocation();
     }
-
-//    private void getCurrentLocation() {
-//        Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-//        if (location != null) {
-//            //Getting longitude and latitude
-//            longitude = location.getLongitude();
-//            latitude = location.getLatitude();
-//
-//
-//
-//            //moving the map to location
-////            moveMap();
-//        }
-//    }
-
 
     private void initializeUI() {
 
@@ -151,11 +141,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
 //        First time view
         dropLocTxt.setVisibility(View.GONE);
-
-//        bottomNavigationView = findViewById(R.id.navigationView);
-//        bottomNavigationView.setVisibility(View.GONE);
-//        ridelater = findViewById(R.id.button3);
-
         travel_type = findViewById(R.id.btn_nav_bar);
         rent_button = findViewById(R.id.rental);
         city_button = findViewById(R.id.city);
@@ -172,7 +157,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         Log.i(TAG, "initilizeMap: ");
         if (mMap == null) {
             Log.i(TAG, "initilizeMap: Inside");
-            CustomMapFragment mCustomMapFragment = ((CustomMapFragment) getFragmentManager().findFragmentById(R.id.map));
+            mCustomMapFragment = ((CustomMapFragment) getFragmentManager().findFragmentById(R.id.map));
             mCustomMapFragment.setOnDragListener(MapsActivity.this);
             mCustomMapFragment.getMapAsync(this);
 
@@ -184,7 +169,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                         .show();
             }
 
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marker);
             mCustomMapFragment.getMapWrapperLayout().setCurrentImage(bitmap);
         }
     }
@@ -256,13 +240,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         if (location != null) {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 20.0f));
         }
-//        else
-//        {
-//            Log.i(TAG, "onMapReady: "+location);
-//        }
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(onload));
-//        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-
         googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {
@@ -371,6 +348,8 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
     public void Searchpickup(View view) {
         trance = 0;
+        mCustomMapFragment.getMapWrapperLayout().setCurrentImage(bitmap);
+        slideDown(bottomNavigationView);
         if (!pickupLocTxt.getText().equals("")) {
             Toast.makeText(this, pickupLocTxt.getText().toString(), Toast.LENGTH_SHORT).show();
         }
@@ -378,6 +357,8 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
     public void Searchdrop(View view) {
         trance = 1;
+        mCustomMapFragment.getMapWrapperLayout().setCurrentImage(bitmap1);
+        slideDown(bottomNavigationView);
         if (!dropLocTxt.getText().equals("")) {
             Toast.makeText(this, dropLocTxt.getText().toString(), Toast.LENGTH_SHORT).show();
         }
@@ -392,7 +373,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     rent_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "rental";
                     dropVisiblity(type);
-//                    getRentalnavigation(type);
                     ren = true;
                     cit = false;
                     out = false;
@@ -402,7 +382,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     city_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "city";
                     dropVisiblity(type);
-//                    getCitynavigation(type);
                     ren = false;
                     cit = true;
                     out = false;
@@ -412,7 +391,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     outstation_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "outstation";
                     dropVisiblity(type);
-//                    getOutstation(type);
                     ren = false;
                     cit = false;
                     out = true;
@@ -429,7 +407,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     outstation_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "rental";
                     dropVisiblity(type);
-//                    getRentalnavigation(type);
                     ren = true;
                     cit = false;
                     out = false;
@@ -441,7 +418,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     outstation_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "city";
                     dropVisiblity(type);
-//                    getCitynavigation(type);
                     ren = false;
                     cit = true;
                     out = false;
@@ -454,7 +430,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     rent_button.setTextColor(ContextCompat.getColor(this, R.color.text_color));
                     type = "outstation";
                     dropVisiblity(type);
-//                    getOutstation(type);
                     ren = false;
                     cit = false;
                     out = true;
@@ -468,9 +443,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     private void slideDown(View view) {
         view.setVisibility(View.GONE);
         isUp = false;
-//        TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
-//        animate.setDuration(500);
-//        view.startAnimation(animate);
     }
 
     private void dropVisiblity(String type) {
@@ -486,13 +458,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-//    public void disableAuto(boolean val) {
-//        if (val)
-//            bottomNavigationView.getMenu().getItem(0).setVisible(true);
-//        else
-//            bottomNavigationView.getMenu().getItem(0).setVisible(false);
-//    }
 
     @Override
     public void onClick(View view) {
@@ -523,7 +488,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     bundle.putString("ori_lng", String.valueOf(origin.longitude));
                     bundle.putString("dest_lat", String.valueOf(dest.latitude));
                     bundle.putString("dest_lng", String.valueOf(dest.longitude));
-
                     bottomSheet1.setArguments(bundle);
                     bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
                 }
@@ -534,6 +498,10 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     bundle.putString("dropn", dropLocTxt.getText().toString());
                     bundle.putString("vehicle", "Prime");
                     bundle.putString("travel_type", type);
+                    bundle.putString("ori_lat", String.valueOf(origin.latitude));
+                    bundle.putString("ori_lng", String.valueOf(origin.longitude));
+                    bundle.putString("dest_lat", String.valueOf(dest.latitude));
+                    bundle.putString("dest_lng", String.valueOf(dest.longitude));
                     bottomSheet1.setArguments(bundle);
                     bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
                 }
@@ -574,6 +542,10 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     bundle1.putString("dropn", dropLocTxt.getText().toString());
                     bundle1.putString("vehicle", "SUV");
                     bundle1.putString("travel_type", type);
+                    bundle1.putString("ori_lat", String.valueOf(origin.latitude));
+                    bundle1.putString("ori_lng", String.valueOf(origin.longitude));
+                    bundle1.putString("dest_lat", String.valueOf(dest.latitude));
+                    bundle1.putString("dest_lng", String.valueOf(dest.longitude));
                     bottomSheet2.setArguments(bundle1);
                     bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
                 }
@@ -584,30 +556,13 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     private void slideUp(View view) {
         view.setVisibility(View.VISIBLE);
         isUp = true;
-
-//        TranslateAnimation animate = new TranslateAnimation(
-//                0,                 // fromXDelta
-//                0,                 // toXDelta
-//                view.getHeight(),  // fromYDelta
-//                0);                // toYDelta
-//        animate.setDuration(500);
-//        animate.setFillAfter(true);
-//        view.startAnimation(animate);
-//        TransitionSet set = new TransitionSet()
-//                .addTransition(new Scale(0.7f))
-//                .addTransition(new Fade())
-//                .setInterpolator(visible ? new LinearOutSlowInInterpolator() : new FastOutLinearInInterpolator());
-//
-//        TransitionManager.beginDelayedTransition(transitionsContainer, set);
-//        view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-
     }
 
     @Override
     public void onLocationChanged(Location location) {
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        //move map camerax
+        //move map camera
         Log.i(TAG, "onLocationChanged: "+latLng.toString());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
@@ -628,8 +583,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("Latitude","disable");
     }
 
-
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
@@ -649,6 +602,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     public void onButtonClicked(String text) {
 
     }
+
 }
 
 //                    case "Auto":

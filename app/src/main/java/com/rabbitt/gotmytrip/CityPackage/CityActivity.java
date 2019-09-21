@@ -1,9 +1,5 @@
 package com.rabbitt.gotmytrip.CityPackage;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -18,6 +14,10 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -193,11 +193,11 @@ public class CityActivity extends AppCompatActivity {
 
     private void getDetails() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.DISTANCE_CALC, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.CITY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                if (!response.equals("")) {
+                if (!response.equals("failed")) {
                     Log.i("Responce.............", response);
                     try {
                         JSONArray arr = new JSONArray(response);
@@ -214,14 +214,13 @@ public class CityActivity extends AppCompatActivity {
                         Log.i("duration.......", duration);
                         Log.i("fare.......", base_fare);
 
-                    } catch (JSONException e) {
-                        Log.i("Error on catch.....", e.getMessage());
-                        e.printStackTrace();
+                    } catch (JSONException ex) {
+                        Log.i("Error on catch.....", ex.getMessage());
+                        ex.printStackTrace();
                     }
                 } else {
                     Log.i("Responce.............", response);
-                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Distance is too short to book your ride..." + response, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -270,7 +269,6 @@ public class CityActivity extends AppCompatActivity {
         durationTxt.setText(duration);
         distanceTxt.setText(distanceto);
 
-
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Info");
         // this is set the view from XML inside AlertDialog
@@ -305,11 +303,10 @@ public class CityActivity extends AppCompatActivity {
 
                 if (response.equals("success")) {
                     Toast.makeText(getApplicationContext(), "Booked Successfully", Toast.LENGTH_SHORT).show();
+                    yourRides();
                 } else {
                     Log.i("Responce.............", response);
-                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Failed..." + response, Toast.LENGTH_SHORT).show();
-                    yourRides();
+                    Toast.makeText(getApplicationContext(), "Sorry!, Can't book your ride, right now !", Toast.LENGTH_SHORT).show();
                 }
             }
 

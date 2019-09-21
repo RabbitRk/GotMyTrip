@@ -32,7 +32,7 @@
         <activity android:name=".CityPackage.CityActivity"
             tools:ignore="InnerclassSeparator" />
         <activity
-            android:name=".OutstationPackage.OutstationAcitvity"
+            android:name=".OutstationPackage.OutstationActivity"
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".RentalPackage.RentalActivity"
