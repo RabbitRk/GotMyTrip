@@ -133,18 +133,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
+
             <!--<CheckBox-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:buttonTint="@color/colorAccent"-->
-
             <!--/>-->
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:fontFamily="serif"
                 android:text="I Accept"
                 android:textAlignment="center"
@@ -158,15 +157,14 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="serif"
                 android:onClick="openTerms"
-
                 android:paddingStart="4dp"
-
                 android:paddingEnd="4dp"
                 android:text="@string/terms"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="#ffff"
                 android:textSize="12sp" />
+
         </LinearLayout>
 
         <Button

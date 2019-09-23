@@ -2,6 +2,7 @@ package com.rabbitt.gotmytrip.OutstationPackage;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,7 +35,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_NAME;
+import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.ID_KEY;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
 public class OutstationActivity extends AppCompatActivity {
@@ -98,7 +99,7 @@ public class OutstationActivity extends AppCompatActivity {
 
         SharedPreferences userpref;
         userpref = getSharedPreferences(USER_PREFS, MODE_PRIVATE);
-        userid = userpref.getString(USER_NAME, "");
+        userid = userpref.getString(ID_KEY, "");
 
         //getting intent
         Intent intent = getIntent();
@@ -119,7 +120,6 @@ public class OutstationActivity extends AppCompatActivity {
         dateonTxt.setText(dateon);
         timeatTxt.setText(timeat);
 
-
         switch (v_type) {
             case "Prime":
                 v_type = "2";
@@ -133,7 +133,6 @@ public class OutstationActivity extends AppCompatActivity {
 
         getuserPrefs();
         getTravelDetails();
-
     }
 
     private void getTime() {
@@ -150,7 +149,7 @@ public class OutstationActivity extends AppCompatActivity {
                                           int minute) {
 
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat timeof = new SimpleDateFormat("HH:mm");
-                        timeatTxt.setText(hourOfDay + ":" + minute);
+                        timeatTxt.setText(String.format("%02d:%02d", hourOfDay, minute));
                     }
 
                 }, mHour, mMinute, false);
@@ -159,11 +158,19 @@ public class OutstationActivity extends AppCompatActivity {
 
     private void getTravelDetails() {
 
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Please wait...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.setProgress(0);
+        progress.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.OUTSTATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 Log.i("Responce......outside", response);
+                progress.dismiss();
 
                 if (!response.equals("")) {
                     Log.i("Responce....in", response);
@@ -203,6 +210,7 @@ public class OutstationActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progress.dismiss();
                 Log.i("Error", "volley response error");
                 Toast.makeText(getApplicationContext(), "Responce error failed   " + error.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -236,13 +244,13 @@ public class OutstationActivity extends AppCompatActivity {
     private void confirmAlert(String total_fare, String total_hrs, String total_min, String total_distance, String exclusive_hr, String per_km, String day_allowance, String night_allownance) {
         String totalTime = total_hrs + "hr:" + total_min + "mins";
 
-        Log.i("textviewLog", total_distance);
-        Log.i("textviewLog", total_fare);
-        Log.i("textviewLog", total_hrs);
-        Log.i("textviewLog", total_min);
-        Log.i("textviewLog", exclusive_hr);
-        Log.i("textviewLog", per_km);
-        Log.i("textviewLog", totalTime);
+//        Log.i("textviewLog", total_distance);
+//        Log.i("textviewLog", total_fare);
+//        Log.i("textviewLog", total_hrs);
+//        Log.i("textviewLog", total_min);
+//        Log.i("textviewLog", exclusive_hr);
+//        Log.i("textviewLog", per_km);
+//        Log.i("textviewLog", totalTime);
 
         fareTxt.setText(total_fare);
         durationTxt.setText(totalTime);
@@ -256,7 +264,7 @@ public class OutstationActivity extends AppCompatActivity {
     private void getuserPrefs() {
         userpref = getSharedPreferences(USER_PREFS, MODE_PRIVATE);
 
-        user_id = userpref.getString(USER_NAME, "");
+        user_id = userpref.getString(ID_KEY, "");
         Toast.makeText(this, "Uid: " + user_id, Toast.LENGTH_SHORT).show();
         if ("".equals(user_id)) {
             Toast.makeText(this, "User ID is not valid", Toast.LENGTH_SHORT).show();
@@ -265,6 +273,16 @@ public class OutstationActivity extends AppCompatActivity {
     }
 
     public void confirmBooking(View view) {
+
+        final String oriLngLng = oriLat + ',' + oriLng;
+        final String desLngLng = destLat + ',' + destLng;
+
+        final String ret_date = returndateTxt.getText().toString();
+        if (ret_date.equals("Return Date")) {
+            Toast.makeText(this, "Please select the return Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.CUSTOMER_OUTSTATION_BOOK, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -303,7 +321,9 @@ public class OutstationActivity extends AppCompatActivity {
                 params.put("KMETER", total_distance);
                 params.put("VEHICLE_ID", v_type);
                 params.put("HOURS", total_hrs);
-                params.put("RETURN_DATE", returndateTxt.getText().toString());
+                params.put("RETURN_DATE", ret_date);
+                params.put("ORI_LAT_LNG", oriLngLng);
+                params.put("DES_LAT_LNG", desLngLng);
 
                 Log.i("paramsVolley", pickupLocation);
 
@@ -332,7 +352,7 @@ public class OutstationActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        timeatTxt.setText(hourOfDay + ":" + minute);
+                        timeatTxt.setText(String.format("%02d:%02d", hourOfDay, minute));
                     }
 
                 }, mHour, mMinute, false);
@@ -344,7 +364,7 @@ public class OutstationActivity extends AppCompatActivity {
                     @SuppressLint("DefaultLocale")
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        dateonTxt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        dateonTxt.setText(String.format("%d-%d-%d", dayOfMonth, monthOfYear + 1, year));
                     }
 
                 }, mYear, mMonth, mDay);
@@ -365,7 +385,7 @@ public class OutstationActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                        returndateTxt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        returndateTxt.setText(String.format("%d-%d-%d", dayOfMonth, monthOfYear + 1, year));
                     }
 
                 }, mYear, mMonth, mDay);

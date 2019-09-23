@@ -34,6 +34,8 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
     private int mYear;
     private int mMonth;
     private int mDay;
+    private static String ori_lat = null;
+    private static String ori_lng = null;
 
     @Nullable
     @Override
@@ -50,6 +52,8 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
         pick_up_loc = getArguments().getString("pickn");
         v_type = getArguments().getString("vehicle");
         String price = getArguments().getString("base_fare");
+        ori_lat = getArguments().getString("ori_lat");
+        ori_lng = getArguments().getString("ori_lng");
 
         price_txt.setText(price);
 
@@ -162,14 +166,11 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
 
                     @SuppressLint("DefaultLocale")
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
-
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SimpleDateFormat timeof = new SimpleDateFormat("HH:mm");
                         rideLater_time = timeof.format(c.getTime());
                         rental_confirm(rideLater_date, rideLater_time);
                     }
-
                 }, mHour, mMinute, false);
         timePickerDialog2.show();
 
@@ -183,9 +184,9 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
             ren.putExtra("date", rideLater_date);
             ren.putExtra("time", rideLater_time);
             ren.putExtra("v_type", v_type);
+        ren.putExtra("ori_lat", ori_lat);
+        ren.putExtra("ori_lng", ori_lng);
             startActivity(ren);
-
-
     }
 
     @Override

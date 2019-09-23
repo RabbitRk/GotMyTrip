@@ -22,14 +22,10 @@
                 android:id="@+id/mainl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tool"
                 android:layout_margin="15dp">
-
-
                 <LinearLayout
                     android:id="@+id/card1"
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
@@ -44,7 +40,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
@@ -58,10 +54,21 @@
                                     android:textColor="@color/colorPrimaryDark"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/cityDrop"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/textview_border"
+                                    android:ellipsize="end"
+                                    android:fontFamily="serif"
+                                    android:maxLines="1"
+                                    android:padding="10dp"
+                                    android:text="location"
+                                    android:textColor="@color/text_color" />
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
@@ -75,6 +82,19 @@
                                     android:textColor="@color/colorPrimaryDark"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/cityPickup"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/textview_border"
+                                    android:ellipsize="end"
+                                    android:fontFamily="serif"
+                                    android:maxLines="1"
+                                    android:padding="10dp"
+                                    android:text="location"
+                                    android:textColor="@color/text_color" />
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -127,38 +147,13 @@
                                     android:id="@+id/changedate"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="15dp"
+                                    android:layout_marginStart="15dp"
                                     android:fontFamily="serif"
                                     android:onClick="timeChange"
                                     android:text="Change"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="13sp" />
                             </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/cityDrop"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/textview_border"
-                                android:ellipsize="end"
-                                android:fontFamily="serif"
-                                android:maxLines="1"
-                                android:padding="10dp"
-                                android:text="location"
-                                android:textColor="@color/text_color" />
-
-                            <TextView
-                                android:id="@+id/cityPickup"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/textview_border"
-                                android:ellipsize="end"
-                                android:fontFamily="serif"
-                                android:maxLines="1"
-                                android:padding="10dp"
-                                android:text="location"
-                                android:textColor="@color/text_color" />
-
 
                         </LinearLayout>
 
@@ -191,21 +186,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <Button
-                            android:id="@+id/booking"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@color/colorPrimaryDark"
-                            android:onClick="confirmBooking"
-                            android:text="Book Now"
-                            android:textColor="@color/text_color"
-                            android:textStyle="bold" />
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -220,68 +200,27 @@
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textStyle="bold" />
 
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <View
-                                android:layout_width="2dp"
-                                android:layout_height="match_parent"
-                                android:background="#c0c0c0"
-                                android:padding="10dp" />
-
-                        </LinearLayout>
-                        <!--<TextView-->
-                        <!--android:id="@+id/fare"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:hint="Point 1"-->
-                        <!--android:padding="5dp"-->
-                        <!--android:paddingStart="10dp"-->
-                        <!--android:text="selva dfsdfsdfsdfdsfdsfdsfsdfgsdgsdgsdgsgs"-->
-                        <!--android:textColor="@color/text_color" />-->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="serif"
-                                android:padding="3dp"
-                                android:text="Return on"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="13sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/return_dateon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="serif"
-                                android:padding="2dp"
-                                android:text="Return Date"
-                                android:textColor="@color/text_color"
-                                android:textSize="13sp" />
-
-
-                            <TextView
-                                android:id="@+id/return_changedate"
+                            <TableRow
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:fontFamily="serif"
-                                android:onClick="timeChangeout"
-                                android:text="Change"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="13sp" />
+                                android:layout_height="0.5pt"
+                                android:background="@color/colorAccent"
+                                android:padding="5dp" />
+
                         </LinearLayout>
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <View-->
+<!--                                android:layout_width="2dp"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:background="#c0c0c0"-->
+<!--                                android:padding="10dp" />-->
+
+<!--                        </LinearLayout>-->
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -292,7 +231,8 @@
                             android:text="Fare Details and Rules"
                             android:textColor="@color/text_color"
                             android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="RtlSymmetry" />
 
                         <TextView
                             android:id="@+id/fare"
@@ -349,6 +289,59 @@
                             android:padding="5dp"
                             android:text="night_allowance"
                             android:textColor="@color/text_color" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="serif"
+                                android:padding="3dp"
+                                android:text="Return on"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/return_dateon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="serif"
+                                android:padding="2dp"
+                                android:text="Return Date"
+                                android:textColor="@color/text_color"
+                                android:textSize="13sp" />
+
+
+                            <TextView
+                                android:id="@+id/return_changedate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:fontFamily="serif"
+                                android:text="Change"
+                                android:onClick="timeChangeout"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/booking"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="30dp"
+                            android:background="@color/colorPrimaryDark"
+                            android:onClick="confirmBooking"
+                            android:text="Book Now"
+                            android:textColor="@color/text_color"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 

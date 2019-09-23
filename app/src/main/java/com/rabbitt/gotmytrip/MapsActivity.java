@@ -3,6 +3,7 @@ package com.rabbitt.gotmytrip;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +25,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,6 +42,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.navigation.NavigationView;
 import com.rabbitt.gotmytrip.CityPackage.cityBottomsheet;
 import com.rabbitt.gotmytrip.MapPackage.CustomMapFragment;
 import com.rabbitt.gotmytrip.MapPackage.MapWrapperLayout;
@@ -52,7 +59,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.INTERNET;
 
-public class MapsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, MapWrapperLayout.OnDragListener, GoogleMap.OnCameraMoveListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, BookBottomSheet.BottomSheetListener {
+public class MapsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, MapWrapperLayout.OnDragListener, GoogleMap.OnCameraMoveListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, BookBottomSheet.BottomSheetListener, NavigationView.OnNavigationItemSelectedListener {
 
      GoogleMap mMap;
 
@@ -82,6 +89,18 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        Toolbar toolbar = findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
+
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         if (!checkPermission()) {
             requestPermission();
@@ -120,13 +139,12 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-
     }
 
     private void initializeUI() {
 
         try {
-            // Loading map
+//        Loading map
             Log.i(TAG, "initializeUI: ");
             initilizeMap();
         } catch (Exception e) {
@@ -238,8 +256,9 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         this.mMap = googleMap;
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null) {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 20.0f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 11));
         }
+
         googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {
@@ -466,9 +485,15 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.prime:
 
                 if (ren){
+                    if (pickupLocTxt.getText().toString().equals("")) {
+                        Toast.makeText(this, "Please select the valid location", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     BookBottomSheet bottomSheet1 = new BookBottomSheet();
                     Bundle bundle = new Bundle();
                     bundle.putString("pickn", pickupLocTxt.getText().toString());
+                    bundle.putString("ori_lat", String.valueOf(origin.latitude));
+                    bundle.putString("ori_lng", String.valueOf(origin.longitude));
                     bundle.putString("vehicle", "Prime");
                     bundle.putString("travel_type", type);
                     bundle.putString("base_fare", "399");
@@ -477,6 +502,10 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else if (cit)
                 {
+                    if (pickupLocTxt.getText().toString().equals("") || dropLocTxt.getText().toString().equals("")) {
+                        Toast.makeText(this, "Please select the valid location", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     cityBottomsheet bottomSheet1 = new cityBottomsheet();
                     Bundle bundle = new Bundle();
                     bundle.putString("pickn", pickupLocTxt.getText().toString());
@@ -492,6 +521,10 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     bottomSheet1.show(getSupportFragmentManager(), "exampleBottomSheet");
                 }
                 else {
+                    if (pickupLocTxt.getText().toString().equals("") || dropLocTxt.getText().toString().equals("")) {
+                        Toast.makeText(this, "Please select the valid location", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     outstationBottomSheet bottomSheet1 = new outstationBottomSheet();
                     Bundle bundle = new Bundle();
                     bundle.putString("pickn", pickupLocTxt.getText().toString());
@@ -516,6 +549,8 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                     bundle1.putString("vehicle", "SUV");
                     bundle1.putString("travel_type", type);
                     bundle1.putString("base_fare", "599");
+                    bundle1.putString("ori_lat", String.valueOf(origin.latitude));
+                    bundle1.putString("ori_lng", String.valueOf(origin.longitude));
                     bottomSheet2.setArguments(bundle1);
                     bottomSheet2.show(getSupportFragmentManager(), "exampleBottomSheet");
                 }
@@ -564,8 +599,8 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         //move map camera
         Log.i(TAG, "onLocationChanged: "+latLng.toString());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
     }
 
     @Override
@@ -603,6 +638,42 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.nav_book:
+                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_your_rides:
+                startActivity(new Intent(this, YourRides.class));
+                break;
+            case R.id.nav_about:
+                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_feedback:
+                Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_support:
+                Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+
+    }
 }
 
 //                    case "Auto":

@@ -40,7 +40,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_NAME;
+import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.ID_KEY;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
 public class RentalActivity extends AppCompatActivity {
@@ -55,6 +55,7 @@ public class RentalActivity extends AppCompatActivity {
     String fare;
     String fare1;
     String fare2;
+    String oriLat, oriLng;
     TextView pickupLocTxt, dateonTxt, timeatTxt, changeval, fareTxt, per_kmTxt, per_hrTxt;
     ListView listView;
     String packageid;
@@ -67,7 +68,7 @@ public class RentalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rental);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
 
         //get tool bar
@@ -83,7 +84,6 @@ public class RentalActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         init();
 
@@ -105,7 +105,7 @@ public class RentalActivity extends AppCompatActivity {
         //getting shared preferences
         SharedPreferences userpref;
         userpref = getSharedPreferences(USER_PREFS, MODE_PRIVATE);
-        userid = userpref.getString(USER_NAME, "");
+        userid = userpref.getString(ID_KEY, "");
 
         //getting intent
         Intent intent = getIntent();
@@ -113,6 +113,8 @@ public class RentalActivity extends AppCompatActivity {
         dateon = intent.getStringExtra("date");
         timeat = intent.getStringExtra("time");
         v_type = intent.getStringExtra("v_type");
+        oriLat = intent.getStringExtra("ori_lat");
+        oriLng = intent.getStringExtra("ori_lng");
 
         //initializing textviews
         pickupLocTxt.setText(pickupLocation);
@@ -302,6 +304,8 @@ public class RentalActivity extends AppCompatActivity {
 
     public void confirmBooking(View view) {
 
+        final String oriLngLng = oriLat + ',' + oriLng;
+
         dateon = dateonTxt.getText().toString() + " " + timeatTxt.getText().toString();
 
         datetime = dateon + " " + timeat;
@@ -340,6 +344,7 @@ public class RentalActivity extends AppCompatActivity {
                 params.put("TRAVEL_TYPE", v_type);
                 params.put("PACKAGE_ID", packageid);
                 params.put("FARE", fare);
+                params.put("ORI_LAT_LNG", oriLngLng);
 
 //                Log.i("LNG", traveltype);
 //                Log.i("LNG", loc);
@@ -357,6 +362,7 @@ public class RentalActivity extends AppCompatActivity {
 
     private void yourRides() {
         yourrides.insertdata("1", datetime, "Rental", v_type, pickupLocation, "");
+
         Log.i("value", "inserted");
     }
 

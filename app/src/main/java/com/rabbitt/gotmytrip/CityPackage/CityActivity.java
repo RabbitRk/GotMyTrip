@@ -2,6 +2,7 @@ package com.rabbitt.gotmytrip.CityPackage;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,8 +37,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
-import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_NAME;
+import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.ID_KEY;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
 public class CityActivity extends AppCompatActivity {
@@ -91,8 +93,8 @@ public class CityActivity extends AppCompatActivity {
 //      getting shared preferences
         SharedPreferences userpref;
         userpref = getSharedPreferences(USER_PREFS, MODE_PRIVATE);
-        userid = userpref.getString(USER_NAME, "");
-
+        userid = userpref.getString(ID_KEY, "");
+        Log.i(TAG, "init: " + userid);
 
         Intent intent = getIntent();
         pickupLocation = intent.getStringExtra("pick_up");
@@ -114,7 +116,7 @@ public class CityActivity extends AppCompatActivity {
         dateonTxt.setText(dateon);
         timeatTxt.setText(timeat);
 
-        //initialiseing databse
+        //initialiseing database
         yourrides = new dbHelper(this);
 
         switch (v_type) {
@@ -150,7 +152,7 @@ public class CityActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        timeatTxt.setText(hourOfDay + ":" + minute);
+                        timeatTxt.setText(String.format("%02d:%02d", hourOfDay, minute));
                     }
 
                 }, mHour, mMinute, false);
@@ -184,7 +186,7 @@ public class CityActivity extends AppCompatActivity {
     private void getuserPrefs() {
         userpref = getSharedPreferences(USER_PREFS, MODE_PRIVATE);
 
-        user_id = userpref.getString(USER_NAME, "");
+        user_id = userpref.getString(ID_KEY, "");
 
         if ("".equals(user_id)) {
             Toast.makeText(this, "User ID is not valid", Toast.LENGTH_SHORT).show();
@@ -193,9 +195,17 @@ public class CityActivity extends AppCompatActivity {
 
     private void getDetails() {
 
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Please wait...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.setProgress(0);
+        progress.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.CITY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                progress.dismiss();
 
                 if (!response.equals("failed")) {
                     Log.i("Responce.............", response);
@@ -215,7 +225,7 @@ public class CityActivity extends AppCompatActivity {
                         Log.i("fare.......", base_fare);
 
                     } catch (JSONException ex) {
-                        Log.i("Error on catch.....", ex.getMessage());
+                        Log.i("Error on catch.....", Objects.requireNonNull(ex.getMessage()));
                         ex.printStackTrace();
                     }
                 } else {
@@ -227,6 +237,7 @@ public class CityActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progress.dismiss();
                 Log.i("Error", "volley response error");
                 Toast.makeText(getApplicationContext(), "Responce error failed   " + error.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -295,6 +306,10 @@ public class CityActivity extends AppCompatActivity {
     }
 
     private void citybooking() {
+
+        final String oriLngLng = oriLat + ',' + oriLng;
+        final String desLngLng = destLat + ',' + destLng;
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.CUSTOMER_CITY_BOOK, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -327,6 +342,8 @@ public class CityActivity extends AppCompatActivity {
                 params.put("BASE_FARE", base_fare);
                 params.put("KMETER", distanceto);
                 params.put("VEHICLE_ID", v_type);
+                params.put("ORI_LAT_LNG", oriLngLng);
+                params.put("DES_LAT_LNG", desLngLng);
 
                 return params;
             }
