@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".YourRides"></activity>
+        <activity android:name=".YourRides" />
         <activity android:name=".TermsActivity" />
         <activity android:name=".OtpActivity" />
         <activity android:name=".Forgot_password" />

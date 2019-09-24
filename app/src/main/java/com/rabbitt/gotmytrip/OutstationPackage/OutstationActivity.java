@@ -44,8 +44,7 @@ public class OutstationActivity extends AppCompatActivity {
     String oriLat, oriLng, destLat, destLng, travel_type;
     String total_fare, total_hrs, total_min, total_distance, exclusive_hr, per_km, day_allowance, night_allownance;
 
-    String userid = "", v_type = "";
-    String duration;
+    String userid = "", v_type = "", v_type1 = "";
     String user_id;
 
     TextView pickupLocTxt, dateonTxt, returnChangedateTxt, timeatTxt, changeCurval, fareTxt, distanceTxt, durationTxt, dropLocTxt, exclusiveHrTxt, perKmTxt, dayAllowanceTxt, nightAllowanceTxt, totalHrsTxt, returndateTxt;
@@ -108,11 +107,15 @@ public class OutstationActivity extends AppCompatActivity {
         dateon = intent.getStringExtra("date");
         timeat = intent.getStringExtra("time");
         v_type = intent.getStringExtra("v_type");
+        v_type1 = intent.getStringExtra("v_type");
         travel_type = intent.getStringExtra("travel_type");
         oriLat = intent.getStringExtra("ori_lat");
         oriLng = intent.getStringExtra("ori_lng");
         destLat = intent.getStringExtra("dest_lat");
         destLng = intent.getStringExtra("dest_lng");
+
+        //initialiseing databse
+        yourrides = new dbHelper(this);
 
         //initializing textviews
         pickupLocTxt.setText(pickupLocation);
@@ -277,6 +280,8 @@ public class OutstationActivity extends AppCompatActivity {
         final String oriLngLng = oriLat + ',' + oriLng;
         final String desLngLng = destLat + ',' + destLng;
 
+        datetime = dateonTxt.getText().toString() + " " + timeatTxt.getText().toString();
+
         final String ret_date = returndateTxt.getText().toString();
         if (ret_date.equals("Return Date")) {
             Toast.makeText(this, "Please select the return Date", Toast.LENGTH_SHORT).show();
@@ -289,14 +294,12 @@ public class OutstationActivity extends AppCompatActivity {
 
                 Log.i("Responce......outside", response);
 
-                if (response.equalsIgnoreCase("success")) {
-                    Log.i("Responce....in", response);
-                    Toast.makeText(getApplicationContext(), "Your booking placed", Toast.LENGTH_SHORT).show();
-                } else {
+                if (response.equals("failed")) {
                     Log.i("Responce.............", response);
-                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-                    yourRides();
+                    Toast.makeText(getApplicationContext(), "Sorry!, Can't book your ride, right now !", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Booked Successfully", Toast.LENGTH_SHORT).show();
+                    yourRides(response);
                 }
             }
 
@@ -393,8 +396,8 @@ public class OutstationActivity extends AppCompatActivity {
         datePickerDialog2.show();
     }
 
-    private void yourRides() {
-        yourrides.insertdata(user_id, datetime, "Outstation", v_type, pickupLocation, dropLocation);
+    private void yourRides(String response) {
+        yourrides.insertdata(response+"OTS", datetime, "Outstation", v_type1, pickupLocation, dropLocation);
         Log.i("value", "inserted");
     }
 }

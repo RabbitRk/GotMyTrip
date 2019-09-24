@@ -6,9 +6,11 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,7 +54,7 @@ public class RentalActivity extends AppCompatActivity {
     ArrayList<String> packages = new ArrayList<>(Arrays.asList("1 hr - 15 km", "2 hrs - 30 km", "4 hrs - 40 km", "6 hrs - 60 km", "8 hrs - 80 km", "10 hrs - 100 km",
             "12 hrs - 120 km"));
     String pickupLocation, dateon, timeat;
-    String userid = "", v_type = "";
+    String userid = "", v_type = "", v_type1 = "";
     //    ArrayList<String> base_fare_p = new ArrayList<>(Arrays.asList("399", "599", "899", "1299", "1699","1999", "2299"));
     String fare;
     String fare1;
@@ -62,6 +66,7 @@ public class RentalActivity extends AppCompatActivity {
     dbHelper yourrides;
     String datetime;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    String package_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +118,7 @@ public class RentalActivity extends AppCompatActivity {
         dateon = intent.getStringExtra("date");
         timeat = intent.getStringExtra("time");
         v_type = intent.getStringExtra("v_type");
+        v_type1 = intent.getStringExtra("v_type");
         oriLat = intent.getStringExtra("ori_lat");
         oriLng = intent.getStringExtra("ori_lng");
 
@@ -135,7 +141,23 @@ public class RentalActivity extends AppCompatActivity {
                 break;
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, packages);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, packages){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                // Initialize a TextView for ListView each Item
+                TextView tv = view.findViewById(android.R.id.text1);
+
+                // Set the text color of TextView (ListView Item)
+                tv.setTextColor(Color.WHITE);
+
+                // Generate ListView Item using TextView
+                return view;
+            }
+        };
+
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -144,6 +166,7 @@ public class RentalActivity extends AppCompatActivity {
 
                 //getting text from list onItem clickevent
                 packageid = listView.getItemAtPosition(position).toString();
+                package_id = packageid;
 
                 switch (packageid) {
                     case "1 hr - 15 km":
@@ -192,9 +215,7 @@ public class RentalActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 progress.dismiss();
-
                 Log.i("Responce......aoutside", response);
-
                 if (!response.equals("")) {
                     Log.i("Responce....ain", response);
                     try {
@@ -217,7 +238,6 @@ public class RentalActivity extends AppCompatActivity {
                     }
                 } else {
                     Log.i("Responce.............", response);
-                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -233,13 +253,10 @@ public class RentalActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-
                 params.put("USER_ID", userid);
                 params.put("PACKAGE", packageid);
                 params.put("V_TYPE", v_type);
-
                 return params;
-
             }
         };
 
@@ -252,7 +269,6 @@ public class RentalActivity extends AppCompatActivity {
         per_kmTxt.setText(fare2);
         fareTxt.setText(fare);
     }
-
 
     // Opens Time and Date On Click
     public void timeChange(View view) {
@@ -273,7 +289,7 @@ public class RentalActivity extends AppCompatActivity {
 
 //                        SimpleDateFormat timeat= new SimpleDateFormat("HH:mm");
 
-                        timeatTxt.setText(hourOfDay + ":" + minute);
+                        timeatTxt.setText(String.format("%02d:%02d", hourOfDay, minute));
                     }
 
                 }, mHour, mMinute, false);
@@ -296,19 +312,17 @@ public class RentalActivity extends AppCompatActivity {
 
     }
 
-    public void getPackage(View view) {
-        TextView value = view.findViewById(R.id.rentalpickup);//Changed for Temporary use   -Naveen
-        String val = value.getText().toString();
-        Toast.makeText(this, "hello toast..." + val, Toast.LENGTH_SHORT).show();
-    }
+//    public void getPackage(View view) {
+//        TextView value = view.findViewById(R.id.rentalpickup);//Changed for Temporary use   -Naveen
+//        String val = value.getText().toString();
+//        Toast.makeText(this, "hello toast..." + val, Toast.LENGTH_SHORT).show();
+//    }
 
     public void confirmBooking(View view) {
 
         final String oriLngLng = oriLat + ',' + oriLng;
 
-        dateon = dateonTxt.getText().toString() + " " + timeatTxt.getText().toString();
-
-        datetime = dateon + " " + timeat;
+        datetime = dateonTxt.getText().toString() + " " + timeatTxt.getText().toString();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.CUSTOMER_RENTAL_BOOK, new Response.Listener<String>() {
             @Override
@@ -316,14 +330,12 @@ public class RentalActivity extends AppCompatActivity {
 
                 Log.i("Responce......outside", response);
 
-                if (response.equalsIgnoreCase("success")) {
-                    Log.i("Responce....in", response);
-                    Toast.makeText(getApplicationContext(), "Your booking placed", Toast.LENGTH_SHORT).show();
-                } else {
+                if (response.equals("failed")) {
                     Log.i("Responce.............", response);
-                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-                    yourRides();
+                    Toast.makeText(getApplicationContext(), "Sorry!, Can't book your ride, right now !", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Booked Successfully", Toast.LENGTH_SHORT).show();
+                    yourRides(response);
                 }
             }
 
@@ -346,13 +358,9 @@ public class RentalActivity extends AppCompatActivity {
                 params.put("FARE", fare);
                 params.put("ORI_LAT_LNG", oriLngLng);
 
-//                Log.i("LNG", traveltype);
-//                Log.i("LNG", loc);
-//                Log.i("LNG", datetime);
-//                Log.i("LNG", packagei);
+                Log.i("LNG", datetime);
 
                 return params;
-
             }
         };
 
@@ -360,11 +368,8 @@ public class RentalActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
-    private void yourRides() {
-        yourrides.insertdata("1", datetime, "Rental", v_type, pickupLocation, "");
-
+    private void yourRides(String response) {
+        yourrides.insertdata(response+"RNT", datetime, "Rental", v_type1, pickupLocation, package_id);
         Log.i("value", "inserted");
     }
-
-
 }

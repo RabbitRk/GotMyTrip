@@ -65,6 +65,8 @@ public class cityBottomsheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if (!pick_up_loc.equals("")&&!drop_loc.equals("")) {
+                    //to collapse bottomsheet
+                    dismiss();
                     Intent tocity = new Intent(getContext(), CityActivity.class);
                     tocity.putExtra("pick_up", pick_up_loc);
                     tocity.putExtra("drop", drop_loc);
@@ -94,4 +96,6 @@ public class cityBottomsheet extends BottomSheetDialogFragment {
 
         return v;
     }
+
+
 }

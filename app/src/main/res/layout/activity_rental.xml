@@ -44,7 +44,6 @@
                 <LinearLayout
                     android:id="@+id/card1"
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
@@ -211,10 +210,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:choiceMode="singleChoice"
-                            style="@style/custom"
                             tools:ignore="NestedScrolling">
-
                         </ListView>
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

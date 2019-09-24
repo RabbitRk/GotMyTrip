@@ -28,6 +28,7 @@ import com.rabbitt.gotmytrip.Config;
 import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
+import com.rabbitt.gotmytrip.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +48,7 @@ public class CityActivity extends AppCompatActivity {
     private static final String TAG = "CityActivity";
     String pickupLocation, dropLocation, dateon, timeat;
     String oriLat, oriLng, destLat, destLng, travel_type;
-    String userid = "", v_type = "";
+    String userid = "", v_type = "",  v_type1 = "";
     String base_fare;
     String distanceto;
     String duration;
@@ -102,6 +103,7 @@ public class CityActivity extends AppCompatActivity {
         dateon = intent.getStringExtra("date");
         timeat = intent.getStringExtra("time");
         v_type = intent.getStringExtra("v_type");
+        v_type1 = intent.getStringExtra("v_type");
         travel_type = intent.getStringExtra("travel_type");
         oriLat = intent.getStringExtra("ori_lat");
         oriLng = intent.getStringExtra("ori_lng");
@@ -307,6 +309,7 @@ public class CityActivity extends AppCompatActivity {
 
     private void citybooking() {
 
+        datetime = dateonTxt.getText().toString() + " " + timeatTxt.getText().toString();
         final String oriLngLng = oriLat + ',' + oriLng;
         final String desLngLng = destLat + ',' + destLng;
 
@@ -316,12 +319,12 @@ public class CityActivity extends AppCompatActivity {
 
                 Log.i("Responce.............", response);
 
-                if (response.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Booked Successfully", Toast.LENGTH_SHORT).show();
-                    yourRides();
-                } else {
+                if (response.equals("failed")) {
                     Log.i("Responce.............", response);
                     Toast.makeText(getApplicationContext(), "Sorry!, Can't book your ride, right now !", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Booked Successfully", Toast.LENGTH_SHORT).show();
+                    yourRides(response);
                 }
             }
 
@@ -335,7 +338,6 @@ public class CityActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-
                 params.put("CUS_ID", user_id);
                 params.put("ORIGIN", pickupLocation);
                 params.put("DESTINATION", dropLocation);
@@ -344,7 +346,6 @@ public class CityActivity extends AppCompatActivity {
                 params.put("VEHICLE_ID", v_type);
                 params.put("ORI_LAT_LNG", oriLngLng);
                 params.put("DES_LAT_LNG", desLngLng);
-
                 return params;
             }
         };
@@ -353,9 +354,9 @@ public class CityActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
-    private void yourRides() {
-        yourrides.insertdata(user_id,datetime, "City",v_type, pickupLocation,dropLocation);
+    private void yourRides(String response) {
+        yourrides.insertdata(response+"CTY", datetime, "City", v_type1, pickupLocation, dropLocation);
         Log.i("value","inserted");
+        startActivity(new Intent(this, YourRides.class));
     }
-
 }

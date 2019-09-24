@@ -179,6 +179,8 @@ public class outstationBottomSheet extends BottomSheetDialogFragment {
 
     public void rideLaterIntent(String dateon, String timeat)
     {
+        //to collapse bottomsheet
+        dismiss();
         Intent tocity = new Intent(getContext(), OutstationActivity.class);
         tocity.putExtra("pick_up", pick_up_loc);
         tocity.putExtra("drop", drop_loc);

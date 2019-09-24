@@ -1,5 +1,6 @@
 package com.rabbitt.gotmytrip;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,12 @@ public class yourRidesAdapter extends RecyclerView.Adapter<yourRidesAdapter.hold
         holder.ori.setText(dataModel.getOrigin());
         holder.dest.setText(dataModel.getDestination());
         holder.dateof.setText(dataModel.getTimeat());
+
+        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getOrigin());
+        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getBook_id());
+        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getTimeat());
+        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getOrigin());
+        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getDestination());
     }
 
     @Override

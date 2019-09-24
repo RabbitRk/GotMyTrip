@@ -49,6 +49,7 @@ public class dbHelper extends SQLiteOpenHelper {
         contentValues.put(v_type, v_type1);
         contentValues.put(ori, ori1);
         contentValues.put(dest, dest1);
+
         Log.i("logtaginsert",contentValues.get(bookid).toString());
         db.insert(TABLE, null, contentValues);
     }
@@ -68,7 +69,6 @@ public class dbHelper extends SQLiteOpenHelper {
         Log.i("logtag",cursor.toString());
         Log.i("logtag",String.valueOf(cursor.getCount()));
 
-
         if (cursor.moveToFirst())
         { Log.i("logtag","inside do");
              do {
@@ -81,7 +81,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 String dest = cursor.getString(cursor.getColumnIndexOrThrow("dest"));
                 String ori = cursor.getString(cursor.getColumnIndexOrThrow("ori"));
 
-                Log.i("logtag",bookid);
+                Log.i("6",bookid);
                 dataModel.setBook_id(bookid);
                 dataModel.setOrigin(ori);
                 dataModel.setDestination(dest);
@@ -97,13 +97,9 @@ public class dbHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
 
-
         for (recycleAdapter mo : data) {
-
             Log.i("bookID", "" + mo.getBook_id());
         }
-
-        //
 
         return data;
     }

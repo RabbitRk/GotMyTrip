@@ -178,14 +178,15 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void rental_confirm(String rideLater_date, String rideLater_time) {
-
+        //to collapse bottomsheet
+            dismiss();
             Intent ren = new Intent(getContext(), RentalActivity.class);
             ren.putExtra("pick", pick_up_loc);
             ren.putExtra("date", rideLater_date);
             ren.putExtra("time", rideLater_time);
             ren.putExtra("v_type", v_type);
-        ren.putExtra("ori_lat", ori_lat);
-        ren.putExtra("ori_lng", ori_lng);
+            ren.putExtra("ori_lat", ori_lat);
+            ren.putExtra("ori_lng", ori_lng);
             startActivity(ren);
     }
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/tranfer_color"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/editTextOtp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/textview_border"
+        android:digits="0123456789"
+        android:drawableStart="@drawable/user_phone_icon"
+        android:drawablePadding="15dp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/enter_otp_number"
+        android:inputType="number"
+        android:maxLength="4"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/resendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="resendOTP"
+        android:padding="10dp"
+        android:textSize="14sp"
+        android:text="@string/resend_otp"
+        android:textColor="#5e5f5f" />
+
+    <Button
+        android:id="@+id/buttonConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="otpVerification"
+        android:text="@string/submit"
+        android:textColor="@color/text_color"
+        android:textStyle="bold" />
+
+</LinearLayout>

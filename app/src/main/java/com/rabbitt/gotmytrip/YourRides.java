@@ -1,5 +1,8 @@
 package com.rabbitt.gotmytrip;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,7 +25,6 @@ import java.util.List;
 
 public class YourRides extends AppCompatActivity {
 
-    String val;
     dbHelper database;
     RecyclerView recyclerView;
     yourRidesAdapter recycler;
@@ -56,10 +58,13 @@ public class YourRides extends AppCompatActivity {
         //code begins
         database = new dbHelper(this);
 
-        database.insertdata("1", "11.09.2108", "Rental", "Auto", "Cuddalore", "45km");
-        database.insertdata("1", "11.09.2108", "Rental", "Auto", "Cuddalore", "45km");
-        database.insertdata("1", "11.09.2108", "Rental", "Auto", "Cuddalore", "45km");
-        database.insertdata("1", "11.09.2108", "Rental", "Auto", "Cuddalore", "45km");
+//        database.insertdata("1", "11.09.2108", "Rental", "Auto", "Cuddalore", "45km");
+//        database.insertdata("1", "11.09.2108", "Rental", "Auto", "Cuddalore", "45km");
+//        database.insertdata("1", "11.09.2108", "Rental", "Auto", "Cuddalore", "45km");
+//        database.insertdata("1", "11.09.2108", "Rental", "Auto", "Cuddalore", "45km");
+
+//        AsyncTaskRunner runner = new AsyncTaskRunner();
+//        runner.execute();
 
         productAdapter = database.getdata();
 
@@ -70,8 +75,43 @@ public class YourRides extends AppCompatActivity {
         RecyclerView.LayoutManager reLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(reLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         recyclerView.setAdapter(recycler);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    class AsyncTaskRunner extends AsyncTask<String, String, List<recycleAdapter>> {
+
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected List<recycleAdapter> doInBackground(String... params) {
+            productAdapter = database.getdata();
+            return productAdapter;
+        }
+
+
+        @Override
+        protected void onPostExecute(List<recycleAdapter> result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            recycler = new yourRidesAdapter(productAdapter);
+
+            Log.i("HIteshdata", "" + productAdapter);
+
+            RecyclerView.LayoutManager reLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(reLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(recycler);
+        }
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(YourRides.this,
+                    "Please wait",
+                    "Getting your ride details");
+        }
+        @Override
+        protected void onProgressUpdate(String... text) {
+        }
     }
 
     @Override

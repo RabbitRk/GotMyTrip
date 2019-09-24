@@ -184,6 +184,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:divider="?android:dividerHorizontal"
+                        android:showDividers="middle"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -234,61 +236,156 @@
                             android:textStyle="bold"
                             tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:id="@+id/fare"
+                        <!--Base fare  -->
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="7dp"
-                            android:text="base fare"
-                            android:textColor="@color/text_color" />
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_color"
+                                android:layout_weight="1"
+                                android:text="Base Fare" />
+
+                            <TextView
+                                android:id="@+id/fare"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="7dp"
+                                android:text=""
+                                android:layout_weight="1"
+                                android:textColor="@color/text_color" />
+                        </LinearLayout>
+
+                        <!--Duration-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_color"
+                                android:layout_weight="1"
+                                android:text="Duration" />
+                            <TextView
+                                android:id="@+id/duration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="7dp"
+                                android:text=""
+                                android:layout_weight="1"
+                                android:textColor="@color/text_color" />
+                        </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/duration"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="7dp"
-                            android:text="duration"
-                            android:textColor="@color/text_color" />
-
+                            android:textColor="@color/text_color"
+                            android:layout_weight="1"
+                            android:text="Distance" />
                         <TextView
                             android:id="@+id/distance"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="distance"
+                            android:text=""
+                            android:layout_weight="1"
                             android:textColor="@color/text_color" />
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:layout_weight="1"
+                            android:text="Exclusive Hours" />
                         <TextView
                             android:id="@+id/ex_hr"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="5dp"
-                            android:text="ex_hr"
+                            android:text=""
                             android:textColor="@color/text_color" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:layout_weight="1"
+                            android:text="Cost per K/m" />
                         <TextView
                             android:id="@+id/per_km"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="per_km"
+                            android:layout_weight="1"
+                            android:text=""
                             android:textColor="@color/text_color" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:layout_weight="1"
+                            android:text="Day Allowance" />
                         <TextView
                             android:id="@+id/day_allowance"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="day_allowance"
+                            android:layout_weight="1"
+                            android:text=""
                             android:textColor="@color/text_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:layout_weight="1"
+                            android:text="Night Allowance" />
+                        <TextView
                             android:id="@+id/night_allowance"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="night_allowance"
+                            android:layout_weight="1"
+                            android:text=""
                             android:textColor="@color/text_color" />
+                    </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"

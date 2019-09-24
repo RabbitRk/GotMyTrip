@@ -82,6 +82,7 @@
     <string name="sub">LOGIN</string>
     <string name="navigation_drawer_open">o</string>
     <string name="navigation_drawer_close">c</string>
+    <string name="resend_otp">Resend OTP</string>
     <string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>
