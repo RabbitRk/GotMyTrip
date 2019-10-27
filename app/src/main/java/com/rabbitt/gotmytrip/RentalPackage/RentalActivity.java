@@ -33,6 +33,7 @@ import com.rabbitt.gotmytrip.Config;
 import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
+import com.rabbitt.gotmytrip.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -369,7 +370,8 @@ public class RentalActivity extends AppCompatActivity {
     }
 
     private void yourRides(String response) {
-        yourrides.insertdata(response+"RNT", datetime, "Rental", v_type1, pickupLocation, package_id);
+//        yourrides.insertdata(response+"RNT", datetime, "Rental", v_type1, pickupLocation, package_id);
         Log.i("value", "inserted");
+        startActivity(new Intent(this, YourRides.class));
     }
 }

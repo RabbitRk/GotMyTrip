@@ -26,6 +26,7 @@ public class yourRidesAdapter extends RecyclerView.Adapter<yourRidesAdapter.hold
     @Override
     public holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.package_list, null);
+
         return new holder(view);
     }
 

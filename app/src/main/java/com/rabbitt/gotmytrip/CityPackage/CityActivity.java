@@ -355,7 +355,7 @@ public class CityActivity extends AppCompatActivity {
     }
 
     private void yourRides(String response) {
-        yourrides.insertdata(response+"CTY", datetime, "City", v_type1, pickupLocation, dropLocation);
+//        yourrides.insertdata(response+"CTY", datetime, "City", v_type1, pickupLocation, dropLocation);
         Log.i("value","inserted");
         startActivity(new Intent(this, YourRides.class));
     }

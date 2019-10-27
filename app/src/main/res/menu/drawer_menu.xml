@@ -38,8 +38,6 @@
         </group>
         <group android:id="@+id/group5"
             android:checkableBehavior="single">
-
-
             <item
                 android:id="@+id/nav_feedback"
                 android:icon="@drawable/ic_feedback"

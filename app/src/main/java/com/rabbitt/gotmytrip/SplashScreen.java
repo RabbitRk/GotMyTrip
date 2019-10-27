@@ -1,10 +1,11 @@
 package com.rabbitt.gotmytrip;
 
 import android.content.Intent;
-import android.os.Handler;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 
@@ -44,6 +45,6 @@ public class SplashScreen extends AppCompatActivity {
                     ex.printStackTrace();
                 }
             }
-        }, 2000);
+        }, 1000);
     }
 }

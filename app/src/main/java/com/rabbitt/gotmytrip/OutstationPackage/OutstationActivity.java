@@ -25,6 +25,7 @@ import com.rabbitt.gotmytrip.Config;
 import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
+import com.rabbitt.gotmytrip.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -397,7 +398,8 @@ public class OutstationActivity extends AppCompatActivity {
     }
 
     private void yourRides(String response) {
-        yourrides.insertdata(response+"OTS", datetime, "Outstation", v_type1, pickupLocation, dropLocation);
+//        yourrides.insertdata(response+"OTS", datetime, "Outstation", v_type1, pickupLocation, dropLocation);
         Log.i("value", "inserted");
+        startActivity(new Intent(this, YourRides.class));
     }
 }

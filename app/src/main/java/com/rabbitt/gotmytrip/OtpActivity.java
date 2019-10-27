@@ -44,6 +44,7 @@ public class OtpActivity extends AppCompatActivity {
     }
 
     private void getToken() {
+
         SharedPreferences sp;
         sp = getSharedPreferences(Config.SHARED_PREF, MODE_PRIVATE);
         token = sp.getString("token","");
@@ -68,11 +69,18 @@ public class OtpActivity extends AppCompatActivity {
 
     private boolean checkAndRequestPermissions() {
         Log.i(TAG, "Request checking........................");
+
         int permissionSendMessage = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
         int receiveSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS);
         int readSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
 
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+//        int result2 = ContextCompat.checkSelfPermission(this, Manifest.permission.TELEPHONY_SERVICE);                  ///suspicious  +>if
+        int result4 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE);
+
         List<String> listPermissionsNeeded = new ArrayList<>();
+
         if (receiveSMS != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.RECEIVE_MMS);
         }
@@ -82,6 +90,20 @@ public class OtpActivity extends AppCompatActivity {
         if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.SEND_SMS);
         }
+        if (result != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (result1 != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.INTERNET);
+        }
+//        if (result2 != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.SEND_SMS);                                                         //->
+//        }
+        if (result4 != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_NETWORK_STATE);
+        }
+
+
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(this,
                     listPermissionsNeeded.toArray(new String[0]),

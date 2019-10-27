@@ -117,15 +117,15 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         //Initilize UI
         initializeUI();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "run: ");
-                if (!checkPermission()) {
-                    requestPermission();
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.i(TAG, "run: ");
+//                if (!checkPermission()) {
+//                    requestPermission();
+//                }
+//            }
+//        }).start();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (locationManager != null) {
@@ -325,9 +325,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void requestPermission() {
-
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, INTERNET, TELEPHONY_SERVICE, ACCESS_NETWORK_STATE}, PERMISSION_REQUEST_CODE);
-
     }
 
     @Override

@@ -18,15 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cancel" />
-
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/v_type"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_margin="5dp"
@@ -40,20 +38,32 @@
                     android:textSize="13sp" />
 
                 <TextView
-                    android:id="@+id/book_id"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="5dp"
-                    android:layout_marginBottom="5dp"
                     android:fontFamily="serif"
-                    android:hint="Package"
+                    android:gravity="end"
+                    android:hint="Book ID: "
+                    android:foregroundGravity="right"
+                    android:layout_margin="5dp"
                     android:padding="5dp"
                     android:paddingStart="20dp"
-
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/text_color"
                     android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/book_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:gravity="end"
+                    android:hint="Package"
+                    android:foregroundGravity="right"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
                 <TextView
                     android:id="@+id/travel_type"
@@ -66,7 +76,6 @@
                     android:hint="Package"
                     android:padding="5dp"
                     android:paddingStart="20dp"
-
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/text_color"
                     android:textSize="13sp" />
@@ -117,6 +126,19 @@
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/text_color"
                 android:textSize="13sp" />
+
+<!--            <Button-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginStart="30dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginEnd="30dp"-->
+<!--                android:background="@color/colorPrimaryDark"-->
+<!--                android:textColor="@color/text_color"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:text="Cancel" />-->
 
         </LinearLayout>
 

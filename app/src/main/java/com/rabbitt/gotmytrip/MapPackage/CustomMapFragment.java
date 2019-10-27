@@ -22,8 +22,7 @@ public class CustomMapFragment extends MapFragment {
         return mMapWrapperLayout;
     }
 
-    public MapWrapperLayout getMapWrapperLayout()
-    {
+    public MapWrapperLayout getMapWrapperLayout() {
         return mMapWrapperLayout;
     }
 

@@ -1,9 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:background="@drawable/background"
     tools:context=".TermsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/TitleWindow"
+        android:text="TERMS AND CONDITIONS"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="serif"
+        android:textStyle="bold" />
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/TitleWindow">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Subtitle"
+                android:text="EFFECTIVE FROM JANUARY 15,2019"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:letterSpacing="0.15"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/MessageWindow"
+                android:text="These Terms of use constitutes of an agreement between you and the GMT. Use of the GMT indicates the unconditionnal acceptance of below mentioned terms and condition. The GMT may change these terms of use at any time by posting changes online.\n"
+                android:lineSpacingExtra="10dp"
+                android:letterSpacing="0.05"
+                android:textColor="@color/text_color"
+                android:fontFamily="sans-serif"
+                android:textSize="13sp"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Subtitle1"
+                android:text="BOOKING NORMS"
+                android:letterSpacing="0.15"
+                android:textColor="@color/text_color"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/MessageWindow1"
+                android:text="You must allow sufficient time while booking your taxi for any delay caused by the traffic or weather conditions. The GMT shall not be responsible for any delay caused by your failure to allow enough time to reach your destination or if the passenger/s are not ready at time of pickup. You must order the car as per your space requirements. The GMT cannot guarantee to carry luggage b guidelines allowed. If agreed, extra charges will be charged.\n"
+                android:lineSpacingExtra="10dp"
+                android:letterSpacing="0.05"
+                android:textColor="@color/text_color"
+                android:fontFamily="sans-serif"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Subtitle2"
+                android:text="FARE AND PAYMENTS"
+                android:letterSpacing="0.15"
+                android:textColor="@color/text_color"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/MessageWindow2"
+                android:text="The payment plans have been listed on our website. The tariff includes Parking Charges and Toll Tax. Once destination arrived, we will send you the final quotation on your phone after getting all the details about the booking. The payments will be through cash only. Please check your booking confirmation carefully and inform GMT promptly of any errors like cancelling the trip or any lates in starting trip.\n"
+                android:letterSpacing="0.05"
+                android:textColor="@color/text_color"
+                android:lineSpacingExtra="10dp"
+                android:fontFamily="sans-serif"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Subtitle3"
+                android:text="AT YOUR OWN RISK"
+                android:letterSpacing="0.15"
+                android:textColor="@color/text_color"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/MessageWindow3"
+                android:text="GMT shall not be responsible or liable for any loss or damage of your belongings.\n"
+                android:letterSpacing="0.05"
+                android:textColor="@color/text_color"
+                android:lineSpacingExtra="10dp"
+                android:fontFamily="sans-serif"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Subtitle4"
+                android:text="SERVICES"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:letterSpacing="0.15"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/MessageWindow4"
+                android:text="The GMT will not carry more passengers than allowed by the norms."
+                android:fontFamily="sans-serif"
+                android:textSize="13sp"
+                android:letterSpacing="0.05"
+                android:textColor="@color/text_color"
+                android:lineSpacingExtra="10dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
