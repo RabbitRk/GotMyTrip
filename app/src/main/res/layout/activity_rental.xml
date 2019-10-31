@@ -210,8 +210,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:choiceMode="singleChoice"
-                            tools:ignore="NestedScrolling">
-                        </ListView>
+                            tools:ignore="NestedScrolling"></ListView>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -240,8 +239,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -253,7 +252,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="serif"
                                 android:padding="5dp"
-                                android:text="Vehicle Type"
+                                android:text="Fare Details"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textStyle="bold" />
 
@@ -279,43 +278,112 @@
                         </LinearLayout>
 
 
-                        <TextView
+                        <!--                        <TextView-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginTop="2dp"-->
+                        <!--                            android:layout_marginBottom="2dp"-->
+                        <!--                            android:paddingStart="10dp"-->
+                        <!--                            android:text="Fare Details and Rules"-->
+                        <!--                            android:textColor="@color/text_color"-->
+                        <!--                            android:textSize="12sp"-->
+                        <!--                            android:textStyle="bold"-->
+                        <!--                            tools:ignore="RtlSymmetry" />-->
+
+                        <TableLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="2dp"
-                            android:paddingStart="10dp"
-                            android:text="Fare Details and Rules"
-                            android:textColor="@color/text_color"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            tools:ignore="RtlSymmetry" />
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="7dp"
+                            android:shrinkColumns="*"
+                            android:stretchColumns="*">
 
-                        <TextView
-                            android:id="@+id/fare"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Point 1"
-                            android:padding="5dp"
-                            android:paddingStart="10dp"
-                            android:text="selva dfsdfsdfsdfdsfdsfdsfsdfgsdgsdgsdgsgs"
-                            android:textColor="@color/text_color"
-                            tools:ignore="RtlSymmetry" />
+                            <!--Base fare  -->
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal">
 
-                        <TextView
-                            android:id="@+id/per_km"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Point 2"
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_color"
+                                    android:layout_weight="1"
+                                    android:text="Base Fare" />
 
-                            android:padding="7dp" />
+                                <TextView
+                                    android:id="@+id/fare"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="7dp"
+                                    android:paddingStart="10dp"
+                                    android:layout_weight="1"
+                                    android:text="fare"
+                                    android:textColor="@color/text_color"
+                                    tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:id="@+id/per_hr"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Point 3"
-                            android:padding="5dp" />
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
+
+                            <TableRow
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_color"
+                                    android:layout_weight="1"
+                                    android:text="Per/Km" />
+                                <TextView
+                                    android:id="@+id/per_km"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="per km"
+                                    android:layout_weight="1"
+                                    android:padding="7dp"
+                                    android:paddingStart="10dp"
+                                    android:textColor="@color/text_color" />
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
+
+                            <TableRow
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_color"
+                                    android:layout_weight="1"
+                                    android:text="Per/Hr" />
+                                <TextView
+                                    android:id="@+id/per_hr"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="per hr"
+                                    android:layout_weight="1"
+                                    android:padding="7dp"
+                                    android:paddingStart="10dp"
+                                    android:textColor="@color/text_color" />
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
+                        </TableLayout>
+
 
                         <Button
                             android:id="@+id/booking"

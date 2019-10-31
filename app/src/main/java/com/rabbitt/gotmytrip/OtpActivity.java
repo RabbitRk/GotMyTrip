@@ -96,9 +96,6 @@ public class OtpActivity extends AppCompatActivity {
         if (result1 != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.INTERNET);
         }
-//        if (result2 != PackageManager.PERMISSION_GRANTED) {
-//            listPermissionsNeeded.add(Manifest.permission.SEND_SMS);                                                         //->
-//        }
         if (result4 != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_NETWORK_STATE);
         }

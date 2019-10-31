@@ -45,7 +45,12 @@
         </group>
 
         <group android:id="@+id/group6"
-            android:checkableBehavior="single"/>
+            android:checkableBehavior="single" >
+            <item
+                android:id="@+id/nav_terms"
+                android:icon="@drawable/ic_feedback"
+                android:title="Feedback" />
+        </group>
 
 
 

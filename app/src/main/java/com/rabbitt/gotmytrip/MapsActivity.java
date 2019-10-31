@@ -651,7 +651,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (item.getItemId()) {
             case R.id.nav_book:
-                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_your_rides:
                 startActivity(new Intent(this, YourRides.class));
@@ -664,6 +664,9 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.nav_support:
                 Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_terms:
+                startActivity(new Intent(this, TermsActivity.class));
                 break;
         }
 

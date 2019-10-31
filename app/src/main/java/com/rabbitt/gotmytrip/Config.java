@@ -11,6 +11,7 @@ public class Config {
     static final String USER_REGISTRATION = "http://192.168.43.231:80/GotMyTrip/addUser";
     static final String OTP_VERIFICATION = "http://192.168.43.231:80/GotMyTrip/checkotp";
     static final String USER_LOGIN = "http://192.168.43.231:80/GotMyTrip/userLogin";
+    static final String GET_RIDE = "http://192.168.43.231:80/GotMyTrip/getRide";
 
     public static final String CUSTOMER_OUTSTATION_BOOK = "http://192.168.43.231:80/GotMyTrip/outstationBooking";
     static final String PRECHECK_AVAIL = "http://192.168.43.231:80/GotMyTrip/preCheckingPayment";

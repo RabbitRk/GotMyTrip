@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp">
+
                 <LinearLayout
                     android:id="@+id/card1"
                     android:layout_width="match_parent"
@@ -54,6 +55,7 @@
                                     android:textColor="@color/colorPrimaryDark"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
+
                                 <TextView
                                     android:id="@+id/cityDrop"
                                     android:layout_width="match_parent"
@@ -185,8 +187,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:divider="?android:dividerHorizontal"
-                        android:showDividers="middle"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:showDividers="middle">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -198,7 +200,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="serif"
                                 android:padding="5dp"
-                                android:text="Vehicle Type"
+                                android:text="Fare Details"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textStyle="bold" />
 
@@ -210,182 +212,231 @@
 
                         </LinearLayout>
 
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="wrap_content"-->
+                        <!--                        <LinearLayout-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:orientation="horizontal">-->
+
+                        <!--                            <View-->
+                        <!--                                android:layout_width="2dp"-->
+                        <!--                                android:layout_height="match_parent"-->
+                        <!--                                android:background="#c0c0c0"-->
+                        <!--                                android:padding="10dp" />-->
+
+                        <!--                        </LinearLayout>-->
+
+
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
 <!--                            android:layout_height="wrap_content"-->
-<!--                            android:orientation="horizontal">-->
-
-<!--                            <View-->
-<!--                                android:layout_width="2dp"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:background="#c0c0c0"-->
-<!--                                android:padding="10dp" />-->
-
-<!--                        </LinearLayout>-->
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="2dp"
-                            android:paddingStart="10dp"
-                            android:text="Fare Details and Rules"
-                            android:textColor="@color/text_color"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            tools:ignore="RtlSymmetry" />
+<!--                            android:layout_marginTop="2dp"-->
+<!--                            android:layout_marginBottom="2dp"-->
+<!--                            android:paddingStart="10dp"-->
+<!--                            android:text="Fare Details and Rules"-->
+<!--                            android:textColor="@color/text_color"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            tools:ignore="RtlSymmetry" />-->
 
                         <!--Base fare  -->
-                        <LinearLayout
+                        <TableLayout
                             android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="7dp"
+                            android:shrinkColumns="*"
+                            android:stretchColumns="*">
+
+                            <TableRow
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_color"
-                                android:layout_weight="1"
-                                android:text="Base Fare" />
+                                android:gravity="center_horizontal">
 
-                            <TextView
-                                android:id="@+id/fare"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Base Fare"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/text_color" />
+
+                                <TextView
+                                    android:id="@+id/fare"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="7dp"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/text_color" />
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
+
+                            <!--Duration-->
+                            <TableRow
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="7dp"
-                                android:text=""
-                                android:layout_weight="1"
-                                android:textColor="@color/text_color" />
-                        </LinearLayout>
+                                android:gravity="center_horizontal">
 
-                        <!--Duration-->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Duration"
+                                    android:textColor="@color/text_color" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/duration"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="7dp"
+                                    android:text=""
+                                    android:textColor="@color/text_color" />
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
+
+
+                            <TableRow
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/text_color"
-                                android:layout_weight="1"
-                                android:text="Duration" />
-                            <TextView
-                                android:id="@+id/duration"
-                                android:layout_width="wrap_content"
+                                android:gravity="center_horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Distance"
+                                    android:textColor="@color/text_color" />
+
+                                <TextView
+                                    android:id="@+id/distance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="5dp"
+                                    android:text=""
+                                    android:textColor="@color/text_color" />
+
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
+
+                            <TableRow
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="7dp"
-                                android:text=""
-                                android:layout_weight="1"
-                                android:textColor="@color/text_color" />
-                        </LinearLayout>
+                                android:gravity="center_horizontal">
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Exclusive Hours"
+                                    android:textColor="@color/text_color" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/ex_hr"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="5dp"
+                                    android:text=""
+                                    android:textColor="@color/text_color" />
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/text_color"
-                            android:layout_weight="1"
-                            android:text="Distance" />
-                        <TextView
-                            android:id="@+id/distance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:text=""
-                            android:layout_weight="1"
-                            android:textColor="@color/text_color" />
+                            <TableRow
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal">
 
-                    </LinearLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Cost per K/m"
+                                    android:textColor="@color/text_color" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/per_km"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="5dp"
+                                    android:text=""
+                                    android:textColor="@color/text_color" />
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/text_color"
-                            android:layout_weight="1"
-                            android:text="Exclusive Hours" />
-                        <TextView
-                            android:id="@+id/ex_hr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text=""
-                            android:textColor="@color/text_color" />
-                    </LinearLayout>
+                            <TableRow
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Day Allowance"
+                                    android:textColor="@color/text_color" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/text_color"
-                            android:layout_weight="1"
-                            android:text="Cost per K/m" />
-                        <TextView
-                            android:id="@+id/per_km"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:layout_weight="1"
-                            android:text=""
-                            android:textColor="@color/text_color" />
-                    </LinearLayout>
+                                <TextView
+                                    android:id="@+id/day_allowance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="5dp"
+                                    android:text=""
+                                    android:textColor="@color/text_color" />
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
+                            <TableRow
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/text_color"
-                            android:layout_weight="1"
-                            android:text="Day Allowance" />
-                        <TextView
-                            android:id="@+id/day_allowance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:layout_weight="1"
-                            android:text=""
-                            android:textColor="@color/text_color" />
-                    </LinearLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Night Allowance"
+                                    android:textColor="@color/text_color" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/night_allowance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="5dp"
+                                    android:text=""
+                                    android:textColor="@color/text_color" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/text_color"
-                            android:layout_weight="1"
-                            android:text="Night Allowance" />
-                        <TextView
-                            android:id="@+id/night_allowance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:layout_weight="1"
-                            android:text=""
-                            android:textColor="@color/text_color" />
-                    </LinearLayout>
+                            </TableRow>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@color/colorPrimaryDark" />
+                        </TableLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -420,8 +471,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:fontFamily="serif"
-                                android:text="Change"
                                 android:onClick="timeChangeout"
+                                android:text="Change"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="13sp" />
                         </LinearLayout>

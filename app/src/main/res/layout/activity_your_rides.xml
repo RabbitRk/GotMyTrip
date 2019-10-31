@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
 
@@ -23,12 +24,35 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/noride"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:visibility="gone"
+        android:layout_marginStart="0dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_block"
+            android:text="No current rides"
+            android:textColor="@color/text_color"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/p1card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:visibility="gone"
         android:layout_marginStart="0dp"
-        app:cardBackgroundColor="@color/tranfer_color"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -40,6 +64,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:gravity="end"
+                    android:hint="Vehicle Type: "
+                    android:foregroundGravity="right"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="13sp" />
+                <TextView
                     android:id="@+id/v_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -49,7 +86,6 @@
                     android:fontFamily="serif"
                     android:hint="Vtype"
                     android:padding="5dp"
-                    android:paddingStart="20dp"
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/text_color"
                     android:textSize="13sp" />
@@ -82,67 +118,139 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:gravity="end"
+                android:hint="Travel Type: "
+                android:foregroundGravity="right"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:paddingStart="20dp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="13sp" />
+
             <TextView
                 android:id="@+id/travel_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_margin="5dp"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="serif"
                 android:hint="Travel Type"
                 android:padding="5dp"
-                android:paddingStart="20dp"
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/text_color"
                 android:textSize="13sp" />
 
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:gravity="end"
+                android:hint="Date: "
+                android:foregroundGravity="right"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:paddingStart="20dp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="13sp" />
             <TextView
                 android:id="@+id/dateof"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_margin="5dp"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="serif"
                 android:hint="Date"
                 android:padding="5dp"
-                android:paddingStart="20dp"
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/text_color"
                 android:textSize="13sp" />
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:gravity="end"
+                android:hint="Start from: "
+                android:foregroundGravity="right"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:paddingStart="20dp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="13sp" />
             <TextView
                 android:id="@+id/ori"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_margin="5dp"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="serif"
                 android:hint="Start from"
                 android:padding="5dp"
-                android:paddingStart="20dp"
-
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/text_color"
                 android:textSize="13sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/dest"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="5dp"
                 android:fontFamily="serif"
-                android:hint="Finished in"
+                android:gravity="end"
+                android:hint="Finish in: "
+                android:foregroundGravity="right"
+                android:layout_margin="5dp"
                 android:padding="5dp"
                 android:paddingStart="20dp"
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/text_color"
                 android:textSize="13sp" />
+            <TextView
+                android:id="@+id/dest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="serif"
+                android:hint="Finished in"
+                android:padding="5dp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="13sp" />
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,11 +290,15 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:layout_margin="10dp"
-        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your past rides" />
+        android:fontFamily="serif"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:text="Your Past Rides"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/your_rides"
