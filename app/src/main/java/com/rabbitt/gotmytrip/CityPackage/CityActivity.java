@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.rabbitt.gotmytrip.Config;
 import com.rabbitt.gotmytrip.DBhelper.dbHelper;
+import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
 import com.rabbitt.gotmytrip.YourRides;
@@ -357,6 +358,8 @@ public class CityActivity extends AppCompatActivity {
     private void yourRides(String response) {
 //        yourrides.insertdata(response+"CTY", datetime, "City", v_type1, pickupLocation, dropLocation);
         Log.i("value","inserted");
+        PrefsManager prefsManager = new PrefsManager(this);
+        prefsManager.setTravel_type("City");
         startActivity(new Intent(this, YourRides.class));
     }
 }

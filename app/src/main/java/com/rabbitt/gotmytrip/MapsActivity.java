@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -43,6 +45,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
+import com.rabbitt.gotmytrip.BroadcastReciever.InternetBroadcast;
 import com.rabbitt.gotmytrip.CityPackage.cityBottomsheet;
 import com.rabbitt.gotmytrip.MapPackage.CustomMapFragment;
 import com.rabbitt.gotmytrip.MapPackage.MapWrapperLayout;
@@ -83,6 +86,8 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     LatLng origin, dest;
     Bitmap bitmap, bitmap1;
     CustomMapFragment mCustomMapFragment;
+    InternetBroadcast receiver;
+    IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +121,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
         //Initilize UI
         initializeUI();
+        checkInternetConnectivity();
 
 //        new Thread(new Runnable() {
 //            @Override
@@ -139,6 +145,12 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+    }
+
+    private void checkInternetConnectivity() {
+        filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new InternetBroadcast();
+        registerReceiver(receiver, filter);
     }
 
     private void initializeUI() {
@@ -674,6 +686,16 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            if (receiver != null)
+                unregisterReceiver(receiver);
+        } catch (Exception ignored) {
+        }
+        super.onDestroy();
     }
 }
 

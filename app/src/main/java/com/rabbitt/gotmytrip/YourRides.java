@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.DBhelper.recycleAdapter;
+import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public class YourRides extends AppCompatActivity {
     yourRidesAdapter recycler;
     List<recycleAdapter> productAdapter;
     ProgressDialog loading;
-    String userid;
+    String userid, travel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,11 @@ public class YourRides extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recycler);
 
+        PrefsManager prefsManager = new PrefsManager(this);
+        travel = prefsManager.getTravel_type();
+
+
+
         init();
     }
 
@@ -103,6 +109,7 @@ public class YourRides extends AppCompatActivity {
                     public void onResponse(String response) {
                         //if the server response is success
                         Log.i(TAG, "Response........................" + response);
+                        loading.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -119,6 +126,7 @@ public class YourRides extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 //Adding the parameters otp and username
                 params.put("userId", userid);
+                params.put("travel_type", travel);
                 return params;
             }
         };
@@ -162,6 +170,11 @@ public class YourRides extends AppCompatActivity {
 //        protected void onProgressUpdate(String... text) {
 //        }
 //    }
+
+    public void viewData()
+    {
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
