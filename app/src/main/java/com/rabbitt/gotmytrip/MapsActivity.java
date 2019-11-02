@@ -226,6 +226,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 addresses = geocoder.getFromLocation(centerLatLng.latitude,
                         centerLatLng.longitude, 1);
+                Log.i(TAG, "updateLocation: "+addresses);
             } catch (IOException e) {
                 e.printStackTrace();
             }

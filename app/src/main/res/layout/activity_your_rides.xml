@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginStart="0dp"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="10dp">
@@ -226,7 +226,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/rental_y"
+                android:id="@+id/rental_p"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="serif"
@@ -258,6 +258,7 @@
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
             <Button
+                android:id="@+id/cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -269,20 +270,25 @@
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
                 android:layout_margin="10dp"
+                android:onClick="cancel_btn"
                 android:text="Cancel" />
             <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="30dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:textColor="@color/text_color"
-                    android:textStyle="bold"
-                    android:layout_margin="10dp"
-                    android:text="Status" />
+
+                android:id="@+id/status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:layout_marginEnd="30dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:onClick="status_btn"
+                android:text="Status" />
             </LinearLayout>
 
         </LinearLayout>

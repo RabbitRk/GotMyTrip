@@ -8,10 +8,12 @@ public class Config {
     public static final String CUSTOMER_CITY_BOOK = "http://192.168.43.231:80/GotMyTrip/cityBooking";
     public static final String CUSTOMER_RENTAL_BOOK = "http://192.168.43.231:80/GotMyTrip/rentalBooking";
     public static final String FORGOT_PASSWORD = "http://192.168.43.231:80/GotMyTrip/forgotPassword";
-    static final String USER_REGISTRATION = "http://192.168.43.231:80/GotMyTrip/addUser";
+    public static final String USER_REGISTRATION = "http://192.168.43.231:80/GotMyTrip/addUser";
     static final String OTP_VERIFICATION = "http://192.168.43.231:80/GotMyTrip/checkotp";
     static final String USER_LOGIN = "http://192.168.43.231:80/GotMyTrip/userLogin";
     static final String GET_RIDE = "http://192.168.43.231:80/GotMyTrip/getRide";
+    static final String CANCEL_RIDE = "http://192.168.43.231:80/GotMyTrip/cancelRide";
+//    static final String GET_RIDE = "http://192.168.43.231:80/GotMyTrip/getRide";
 
     public static final String CUSTOMER_OUTSTATION_BOOK = "http://192.168.43.231:80/GotMyTrip/outstationBooking";
     static final String PRECHECK_AVAIL = "http://192.168.43.231:80/GotMyTrip/preCheckingPayment";

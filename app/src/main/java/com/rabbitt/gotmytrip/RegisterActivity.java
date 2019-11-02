@@ -106,8 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
         final ProgressDialog loading = ProgressDialog.show(this, "Registering", "Please wait...", false, false);
 
         //Again creating the string request
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.USER_REGISTRATION,
-                new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.USER_REGISTRATION, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
@@ -131,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loading.dismiss();
+                        Log.i(TAG, "onErrorResponse: "+error.toString());
                         Toast.makeText(getApplicationContext(), "Username or Phone number already registered", Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -142,6 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("passWord", passTxt);
                 params.put("phoneNumber", phoneTxt);
                 params.put("emailID", emailTxt);
+                Log.i(TAG, "getParams: "+userTxt+passTxt+phoneTxt+emailTxt);
                 return params;
             }
         };
