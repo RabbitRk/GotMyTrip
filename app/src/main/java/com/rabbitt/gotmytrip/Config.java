@@ -9,6 +9,7 @@ public class Config {
     public static final String CUSTOMER_RENTAL_BOOK = "http://192.168.43.231:80/GotMyTrip/rentalBooking";
     public static final String FORGOT_PASSWORD = "http://192.168.43.231:80/GotMyTrip/forgotPassword";
     public static final String USER_REGISTRATION = "http://192.168.43.231:80/GotMyTrip/addUser";
+    public static final String GET_DRIVER = "http://192.168.43.231:80/GotMyTrip/getDriver";
     static final String OTP_VERIFICATION = "http://192.168.43.231:80/GotMyTrip/checkotp";
     static final String USER_LOGIN = "http://192.168.43.231:80/GotMyTrip/userLogin";
     static final String GET_RIDE = "http://192.168.43.231:80/GotMyTrip/getRide";

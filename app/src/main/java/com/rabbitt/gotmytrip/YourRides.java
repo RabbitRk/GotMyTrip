@@ -1,9 +1,13 @@
 package com.rabbitt.gotmytrip;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,9 +60,10 @@ public class YourRides extends AppCompatActivity {
     String userid, travel;
     CardView currentRide, noRide;
     TextView vtype, book_id, start, travelTxt, dest, date, rentalTxt;
-    String vtype_, book_id_, start_, travelTxt_, dest_, date_, rentalTxt_, prefix_;
+    String vtype_, book_id_, start_, travelTxt_, dest_, date_, status_, prefix_, dri_name_, dri_phone_, dri_v_number_;
     AlertDialog.Builder builder;
     PrefsManager prefsManager;
+    Button status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +102,7 @@ public class YourRides extends AppCompatActivity {
         dest = findViewById(R.id.dest);
         date = findViewById(R.id.dateof);
         rentalTxt = findViewById(R.id.rental_p);
+        status = findViewById(R.id.status);
 
         productAdapter = new ArrayList<>();
         //code begins
@@ -121,12 +129,9 @@ public class YourRides extends AppCompatActivity {
         prefsManager = new PrefsManager(this);
         travel = prefsManager.getTravel_type();
 
-        if (travel.equals(""))
-        {
+        if (travel.equals("")) {
             noRide.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             init();
         }
 
@@ -143,18 +148,13 @@ public class YourRides extends AppCompatActivity {
                     public void onResponse(String response) {
                         //if the server response is success
                         Log.i(TAG, "Response........................" + response);
-                        if (response.equals("[]"))
-                        {
+                        if (response.equals("[]")) {
                             noRide.setVisibility(View.VISIBLE);
-                            if(currentRide.getVisibility() == View.VISIBLE)
-                            {
+                            if (currentRide.getVisibility() == View.VISIBLE) {
                                 currentRide.setVisibility(View.GONE);
                             }
-                        }
-                        else
-                        {
-                            if(noRide.getVisibility() == View.VISIBLE)
-                            {
+                        } else {
+                            if (noRide.getVisibility() == View.VISIBLE) {
                                 noRide.setVisibility(View.GONE);
                             }
 
@@ -170,12 +170,12 @@ public class YourRides extends AppCompatActivity {
                                 dest_ = jb.getString("destination_point");
                                 vtype_ = jb.getString("v_type");
                                 date_ = jb.getString("dateon");
+                                status_ = jb.getString("status");
 
                                 Log.i("fare.......", vtype_);
                                 Log.i("per km.......", dest_);
 
-                                switch (prefix_)
-                                {
+                                switch (prefix_) {
                                     case "RNT":
                                         rentalTxt.setText("Package");
                                         travelTxt.setText("Rental");
@@ -188,7 +188,11 @@ public class YourRides extends AppCompatActivity {
                                         break;
                                 }
 
-                                book_id.setText(prefix_+book_id_);
+                                if (status_.equals("1")) {
+                                    status.setVisibility(View.VISIBLE);
+                                }
+
+                                book_id.setText(prefix_ + book_id_);
                                 vtype.setText(vtype_);
                                 start.setText(start_);
                                 dest.setText(dest_);
@@ -263,8 +267,7 @@ public class YourRides extends AppCompatActivity {
 //        }
 //    }
 
-    public void viewData()
-    {
+    public void viewData() {
 
     }
 
@@ -316,10 +319,9 @@ public class YourRides extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.CANCEL_RIDE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i(TAG, "Responce..."+response);
+                Log.i(TAG, "Responce..." + response);
                 loading.dismiss();
-                if (response.equals("succeses"))
-                {
+                if (response.equals("succeses")) {
                     prefsManager.setTravel_type("");
                     Toast.makeText(YourRides.this, "Cancelled successfully", Toast.LENGTH_SHORT).show();
                 }
@@ -349,48 +351,41 @@ public class YourRides extends AppCompatActivity {
     public void status_btn(View view) {
 
         LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.city_booking_confirm, null);
-        final TextView basefareTxt = alertLayout.findViewById(R.id.baseFare);
-        final TextView durationTxt = alertLayout.findViewById(R.id.duration);
-        final TextView distanceTxt = alertLayout.findViewById(R.id.distance);
+        View alertLayout = inflater.inflate(R.layout.ride_status, null);
+        final TextView dri_name = alertLayout.findViewById(R.id.dri_name);
+        final TextView dri_phone = alertLayout.findViewById(R.id.dri_phone);
+        final TextView v_number = alertLayout.findViewById(R.id.v_number);
+        alertLayout.setBackgroundColor(ContextCompat.getColor(this ,R.color.bgcolor));
 
-        loading = ProgressDialog.show(this, "Getting your rides", "Please wait", false, false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.RENTAL, new Response.Listener<String>() {
+        loading = ProgressDialog.show(this, "Fetching your ride status", "Please wait", false, false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.GET_DRIVER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 loading.dismiss();
-//                Log.i("Responce......aoutside", response);
-//                if (!response.equals("")) {
-//                    Log.i("Responce....ain", response);
-//                    try {
-//                        JSONArray arr = new JSONArray(response);
-//                        JSONObject jb = arr.getJSONObject(0);
-//
-//                        fare = jb.getString("base_fare");
-//                        fare1 = jb.getString("per_hr");
-//                        fare2 = jb.getString("per_km");
-//
-//                        Log.i("fare.......", fare);
-//                        Log.i("per km.......", fare2);
-//                        Log.i("per hr.......", fare1);
-//
+                Log.i("Responce......aoutside", response);
+                if (!response.equals("")) {
+                    Log.i("Responce....ain", response);
+                    try {
+                        JSONArray arr = new JSONArray(response);
+                        JSONObject jb = arr.getJSONObject(0);
 
+                        dri_name_ = jb.getString("dri_first_name");
+                        dri_phone_ = jb.getString("dri_phone");
+                        dri_v_number_ = jb.getString("v_no");
 
+                        dri_name.setText(dri_name_);
+                        dri_phone.setText(dri_phone_);
+                        v_number.setText(dri_v_number_);
 
-//        basefareTxt.setText(base_fare);
-//        durationTxt.setText(duration);
-//        distanceTxt.setText(distanceto);
-
-//
-//                    } catch (JSONException e) {
-//                        Log.i("Error on catch.....", e.getMessage());
-//                        e.printStackTrace();
-//                    }
-//                } else {
-//                    Log.i("Responce.............", response);
-//                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-//                }
+                    } catch (JSONException e) {
+                        Log.i("Error on catch.....", e.getMessage());
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.i("Responce.............", response);
+                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                }
             }
 
         }, new Response.ErrorListener() {
@@ -404,9 +399,8 @@ public class YourRides extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-//                params.put("USER_ID", userid);
-//                params.put("PACKAGE", packageid);
-//                params.put("V_TYPE", v_type);
+                params.put("BOOK_ID", book_id_);
+                params.put("CUS_ID", userid);
                 return params;
             }
         };
@@ -438,5 +432,22 @@ public class YourRides extends AppCompatActivity {
         });
         AlertDialog dialog = alert.create();
         dialog.show();
+    }
+
+    public void call_driver(View view) {
+
+        try {
+            if (!dri_phone_.equals("")) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + dri_phone_));
+                if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Please grant permission to make phone call.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                startActivity(callIntent);
+            }
+        } catch (Exception ex) {
+            Log.i(TAG, "makeCall: " + ex.getMessage());
+        }
     }
 }

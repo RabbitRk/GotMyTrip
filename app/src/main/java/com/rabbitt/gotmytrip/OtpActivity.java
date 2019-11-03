@@ -76,7 +76,7 @@ public class OtpActivity extends AppCompatActivity {
 
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         int result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
-//        int result2 = ContextCompat.checkSelfPermission(this, Manifest.permission.TELEPHONY_SERVICE);                  ///suspicious  +>if
+        int result2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);                  ///suspicious  +>if
         int result4 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE);
 
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -98,6 +98,9 @@ public class OtpActivity extends AppCompatActivity {
         }
         if (result4 != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_NETWORK_STATE);
+        }
+        if (result2 != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CALL_PHONE);
         }
 
 

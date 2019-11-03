@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -278,6 +279,7 @@ public class CityActivity extends AppCompatActivity {
         final TextView basefareTxt = alertLayout.findViewById(R.id.baseFare);
         final TextView durationTxt = alertLayout.findViewById(R.id.duration);
         final TextView distanceTxt = alertLayout.findViewById(R.id.distance);
+        alertLayout.setBackgroundColor(ContextCompat.getColor(this ,R.color.bgcolor));
 
         basefareTxt.setText(base_fare);
         durationTxt.setText(duration);
