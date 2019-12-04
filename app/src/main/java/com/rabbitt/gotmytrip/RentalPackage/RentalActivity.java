@@ -34,7 +34,6 @@ import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
-import com.rabbitt.gotmytrip.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -235,7 +234,6 @@ public class RentalActivity extends AppCompatActivity {
                         confirmAlert(fare, fare1, fare2);
 
                     } catch (JSONException e) {
-                        Log.i("Error on catch.....", e.getMessage());
                         e.printStackTrace();
                     }
                 } else {
@@ -305,7 +303,7 @@ public class RentalActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
 //                        SimpleDateFormat dateof = new SimpleDateFormat("dd-MM-yyyy");
-                        dateonTxt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        dateonTxt.setText(String.format("%d-%d-%d", dayOfMonth, monthOfYear + 1, year));
                     }
 
                 }, mYear, mMonth, mDay);
@@ -375,6 +373,6 @@ public class RentalActivity extends AppCompatActivity {
         Log.i("value", "inserted");
         PrefsManager prefsManager = new PrefsManager(this);
         prefsManager.setTravel_type("Rental");
-        startActivity(new Intent(this, YourRides.class));
+//        startActivity(new Intent(this, YourRides.class));
     }
 }

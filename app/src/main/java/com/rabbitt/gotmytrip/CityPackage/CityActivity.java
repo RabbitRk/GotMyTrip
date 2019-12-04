@@ -30,7 +30,6 @@ import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
-import com.rabbitt.gotmytrip.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -164,6 +163,7 @@ public class CityActivity extends AppCompatActivity {
         final DatePickerDialog datePickerDialog2 = new DatePickerDialog(CityActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
 
+                    @SuppressLint("DefaultLocale")
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
@@ -179,8 +179,8 @@ public class CityActivity extends AppCompatActivity {
 
     private void getCurrentDateTime() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat dft = new SimpleDateFormat("HH:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dft = new SimpleDateFormat("HH:mm");
         String rideNow_date = df.format(c.getTime());
         String rideNow_time = dft.format(c.getTime());
         dateonTxt.setText(rideNow_date);
@@ -275,7 +275,7 @@ public class CityActivity extends AppCompatActivity {
 
     private void reg() {
         LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.city_booking_confirm, null);
+        @SuppressLint("InflateParams") View alertLayout = inflater.inflate(R.layout.city_booking_confirm, null);
         final TextView basefareTxt = alertLayout.findViewById(R.id.baseFare);
         final TextView durationTxt = alertLayout.findViewById(R.id.duration);
         final TextView distanceTxt = alertLayout.findViewById(R.id.distance);
@@ -362,6 +362,6 @@ public class CityActivity extends AppCompatActivity {
         Log.i("value","inserted");
         PrefsManager prefsManager = new PrefsManager(this);
         prefsManager.setTravel_type("City");
-        startActivity(new Intent(this, YourRides.class));
+//        startActivity(new Intent(this, YourRides.class));
     }
 }

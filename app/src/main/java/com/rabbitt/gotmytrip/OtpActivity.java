@@ -139,6 +139,7 @@ public class OtpActivity extends AppCompatActivity {
                             //Starting a new activity
 
                             startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                            finish();
 
                         } else {
                             loading.dismiss();

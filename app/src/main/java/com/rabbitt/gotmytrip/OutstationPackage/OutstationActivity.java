@@ -26,7 +26,6 @@ import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
-import com.rabbitt.gotmytrip.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -403,6 +402,6 @@ public class OutstationActivity extends AppCompatActivity {
         Log.i("value", "inserted");
         PrefsManager prefsManager = new PrefsManager(this);
         prefsManager.setTravel_type("Outstation");
-        startActivity(new Intent(this, YourRides.class));
+//        startActivity(new Intent(this, YourRides.class));
     }
 }
