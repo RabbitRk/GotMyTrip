@@ -666,18 +666,19 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nav_book:
 //                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_your_rides:
-                startActivity(new Intent(this, YourRides.class));
-                break;
+//            case R.id.nav_your_rides:
+//                startActivity(new Intent(this, YourRides.class));
+//                break;
             case R.id.nav_about:
-                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, AboutUsActivity.class));
                 break;
             case R.id.nav_feedback:
-                Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, FeedbackActivity.class));
                 break;
-            case R.id.nav_support:
-                Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.nav_support:
+//                Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
+//                break;
             case R.id.nav_terms:
                 startActivity(new Intent(this, TermsActivity.class));
                 break;
