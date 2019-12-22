@@ -35,8 +35,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -80,6 +82,7 @@ public class CityActivity extends AppCompatActivity {
         init();
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void init() {
 
 //      textview initialization
@@ -111,6 +114,18 @@ public class CityActivity extends AppCompatActivity {
         destLat = intent.getStringExtra("dest_lat");
         destLng = intent.getStringExtra("dest_lng");
 
+        try {
+            @SuppressLint("SimpleDateFormat")
+            final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+            final Date dateObj = sdf.parse(timeat);
+//            System.out.println(dateObj);
+            if (dateObj != null) {
+                timeat = dateObj.toString();
+            }
+//            System.out.println(new SimpleDateFormat("K:mm a").format(dateObj));
+        } catch (final ParseException e) {
+            e.printStackTrace();
+        }
         Log.i(TAG, "init: "+" "+oriLat+" "+pickupLocation);
 
         //initializing textviews

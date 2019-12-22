@@ -39,9 +39,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -123,10 +126,24 @@ public class RentalActivity extends AppCompatActivity {
         oriLat = intent.getStringExtra("ori_lat");
         oriLng = intent.getStringExtra("ori_lng");
 
+        try {
+            @SuppressLint("SimpleDateFormat")
+            final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+            final Date dateObj = sdf.parse(timeat);
+//            System.out.println(dateObj);
+            if (dateObj != null) {
+                timeat = dateObj.toString();
+            }
+//            System.out.println(new SimpleDateFormat("K:mm a").format(dateObj));
+        } catch (final ParseException e) {
+            e.printStackTrace();
+        }
         //initializing textviews
         pickupLocTxt.setText(pickupLocation);
         dateonTxt.setText(dateon);
         timeatTxt.setText(timeat);
+
+
 
         //initialiseing databse
         yourrides = new dbHelper(this);

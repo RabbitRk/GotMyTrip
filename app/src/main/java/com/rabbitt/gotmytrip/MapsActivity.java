@@ -682,6 +682,8 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nav_terms:
                 startActivity(new Intent(this, TermsActivity.class));
                 break;
+                default:
+                    break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
