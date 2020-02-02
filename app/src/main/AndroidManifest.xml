@@ -28,7 +28,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".FeedbackActivity"></activity>
         <activity android:name=".AboutUsActivity" />
-        <activity android:name=".YourRides" />
+        <activity android:name=".YourRide.YourRides" />
         <activity android:name=".TermsActivity" />
         <activity android:name=".OtpActivity" />
         <activity android:name=".Forgot_password" />

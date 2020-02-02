@@ -30,10 +30,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.rabbitt.gotmytrip.Config;
-import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
+import com.rabbitt.gotmytrip.YourRide.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +51,8 @@ import java.util.Map;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.ID_KEY;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
+//import com.rabbitt.gotmytrip.DBhelper.dbHelper;
+
 public class RentalActivity extends AppCompatActivity {
 
     RecyclerView packView;
@@ -67,7 +69,7 @@ public class RentalActivity extends AppCompatActivity {
     TextView pickupLocTxt, dateonTxt, timeatTxt, changeval, fareTxt, per_kmTxt, per_hrTxt;
     ListView listView;
     String packageid;
-    dbHelper yourrides;
+//    dbHelper yourrides;
     String datetime;
     private int mYear, mMonth, mDay, mHour, mMinute;
     String package_id;
@@ -146,7 +148,7 @@ public class RentalActivity extends AppCompatActivity {
 
 
         //initialiseing databse
-        yourrides = new dbHelper(this);
+//        yourrides = new dbHelper(this);
 
         switch (v_type) {
             case "Prime":
@@ -390,6 +392,6 @@ public class RentalActivity extends AppCompatActivity {
         Log.i("value", "inserted");
         PrefsManager prefsManager = new PrefsManager(this);
         prefsManager.setTravel_type("Rental");
-//        startActivity(new Intent(this, YourRides.class));
+        startActivity(new Intent(this, YourRides.class));
     }
 }

@@ -1,6 +1,5 @@
-package com.rabbitt.gotmytrip;
+package com.rabbitt.gotmytrip.YourRide;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.rabbitt.gotmytrip.DBhelper.recycleAdapter;
+import com.rabbitt.gotmytrip.R;
 
 import java.util.List;
 
 
 public class yourRidesAdapter extends RecyclerView.Adapter<yourRidesAdapter.holder> {
 
-    private List<recycleAdapter> dataModelArrayList;
+    private List<ModalAdapter> dataModelArrayList;
 
-    yourRidesAdapter(List<recycleAdapter> dataModelArrayList) {
+    yourRidesAdapter(List<ModalAdapter> dataModelArrayList) {
         this.dataModelArrayList = dataModelArrayList;
     }
 
@@ -33,20 +32,26 @@ public class yourRidesAdapter extends RecyclerView.Adapter<yourRidesAdapter.hold
     @Override
     public void onBindViewHolder(@NonNull holder holder, int i) {
 
-        recycleAdapter dataModel = dataModelArrayList.get(i);
+        ModalAdapter dataModel = dataModelArrayList.get(i);
 
         holder.book_id.setText(dataModel.getBook_id());
         holder.v_type.setText(dataModel.getV_type());
-        holder.travel_type.setText(dataModel.getTravel_type());
-        holder.ori.setText(dataModel.getOrigin());
-        holder.dest.setText(dataModel.getDestination());
-        holder.dateof.setText(dataModel.getTimeat());
+        holder.travel_type.setText(dataModel.getPrefix());
+        holder.ori.setText(dataModel.getStart());
+        holder.dateof.setText(dataModel.getDate());
 
-        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getOrigin());
-        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getBook_id());
-        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getTimeat());
-        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getOrigin());
-        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getDestination());
+        if (dataModel.getPrefix().equals("RNT"))
+        {
+            holder.dest_lb.setText("Package");
+        }
+
+        holder.dest.setText(dataModel.getEnd());
+
+//        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getOrigin());
+//        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getBook_id());
+//        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getTimeat());
+//        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getOrigin());
+//        Log.i("MaluRk", "onBindViewHolder: "+dataModel.getDestination());
     }
 
     @Override
@@ -56,7 +61,7 @@ public class yourRidesAdapter extends RecyclerView.Adapter<yourRidesAdapter.hold
 
     class holder extends RecyclerView.ViewHolder {
 
-        TextView book_id, travel_type, v_type, dateof, ori, dest;
+        TextView book_id, travel_type, v_type, dateof, ori, dest, dest_lb;
 
         holder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +72,7 @@ public class yourRidesAdapter extends RecyclerView.Adapter<yourRidesAdapter.hold
             dateof = itemView.findViewById(R.id.dateof);
             ori = itemView.findViewById(R.id.ori);
             dest = itemView.findViewById(R.id.dest);
+            dest_lb = itemView.findViewById(R.id.dest_lbl);
         }
     }
 }

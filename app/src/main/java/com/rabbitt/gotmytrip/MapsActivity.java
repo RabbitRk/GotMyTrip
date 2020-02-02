@@ -52,6 +52,7 @@ import com.rabbitt.gotmytrip.MapPackage.MapWrapperLayout;
 import com.rabbitt.gotmytrip.OutstationPackage.outstationBottomSheet;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.RentalPackage.BookBottomSheet;
+import com.rabbitt.gotmytrip.YourRide.YourRides;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout travel_type;
     int trance = 0;
     boolean isUp;
+
     //Type Variable says about rent or city or out
     String type;
     ViewGroup transitionsContainer;
@@ -98,8 +100,8 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
 
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -156,20 +158,20 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     private void initializeUI() {
 
         try {
-//        Loading map
+//      Loading map
             Log.i(TAG, "initializeUI: ");
             initilizeMap();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-//        Ui initilization
+//      Ui initilization
         dropLocTxt = findViewById(R.id.dropLocation);
         pickupLocTxt = findViewById(R.id.pickupLocation);
         prime = findViewById(R.id.prime);
         suv = findViewById(R.id.suv);
 
-//        First time view
+//      First time view
         dropLocTxt.setVisibility(View.GONE);
         travel_type = findViewById(R.id.btn_nav_bar);
         rent_button = findViewById(R.id.rental);
@@ -178,7 +180,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         bottomNavigationView = findViewById(R.id.v_type);
         transitionsContainer = findViewById(R.id.transitions_container);
 
-        //onclick listener
+//      onclick listener
         suv.setOnClickListener(this);
         prime.setOnClickListener(this);
     }
@@ -190,7 +192,6 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
             mCustomMapFragment = ((CustomMapFragment) getFragmentManager().findFragmentById(R.id.map));
             mCustomMapFragment.setOnDragListener(MapsActivity.this);
             mCustomMapFragment.getMapAsync(this);
-
 
             // check if map is created successfully or not
             if (mMap == null) {
@@ -666,9 +667,9 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nav_book:
 //                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
                 break;
-//            case R.id.nav_your_rides:
-//                startActivity(new Intent(this, YourRides.class));
-//                break;
+            case R.id.nav_your_rides:
+                startActivity(new Intent(this, YourRides.class));
+                break;
             case R.id.nav_about:
 //                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, AboutUsActivity.class));

@@ -22,10 +22,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.rabbitt.gotmytrip.Config;
-import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
+import com.rabbitt.gotmytrip.YourRide.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +41,8 @@ import java.util.Map;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.ID_KEY;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
+//import com.rabbitt.gotmytrip.DBhelper.dbHelper;
+
 public class OutstationActivity extends AppCompatActivity {
 
     String pickupLocation, dropLocation, dateon, timeat;
@@ -51,7 +53,7 @@ public class OutstationActivity extends AppCompatActivity {
     String user_id;
 
     TextView pickupLocTxt, dateonTxt, returnChangedateTxt, timeatTxt, changeCurval, fareTxt, distanceTxt, durationTxt, dropLocTxt, exclusiveHrTxt, perKmTxt, dayAllowanceTxt, nightAllowanceTxt, totalHrsTxt, returndateTxt;
-    dbHelper yourrides;
+//    dbHelper yourrides;
     String datetime;
 
     SharedPreferences userpref;
@@ -130,7 +132,7 @@ public class OutstationActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //initialiseing databse
-        yourrides = new dbHelper(this);
+//        yourrides = new dbHelper(this);
 
         //initializing textviews
         pickupLocTxt.setText(pickupLocation);
@@ -416,6 +418,6 @@ public class OutstationActivity extends AppCompatActivity {
         Log.i("value", "inserted");
         PrefsManager prefsManager = new PrefsManager(this);
         prefsManager.setTravel_type("Outstation");
-//        startActivity(new Intent(this, YourRides.class));
+        startActivity(new Intent(this, YourRides.class));
     }
 }

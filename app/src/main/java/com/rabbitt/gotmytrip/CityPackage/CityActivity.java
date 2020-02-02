@@ -26,10 +26,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.rabbitt.gotmytrip.Config;
-import com.rabbitt.gotmytrip.DBhelper.dbHelper;
 import com.rabbitt.gotmytrip.PrefsManager.PrefsManager;
 import com.rabbitt.gotmytrip.R;
 import com.rabbitt.gotmytrip.VolleySingleton;
+import com.rabbitt.gotmytrip.YourRide.YourRides;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,10 +46,13 @@ import java.util.Objects;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.ID_KEY;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
+//import com.rabbitt.gotmytrip.DBhelper.dbHelper;
+
 public class CityActivity extends AppCompatActivity {
 
     private static final String TAG = "CityActivity";
-    String pickupLocation, dropLocation, dateon, timeat;
+    String pickupLocation, dropLocation;
+    String dateon, timeat;
     String oriLat, oriLng, destLat, destLng, travel_type;
     String userid = "", v_type = "",  v_type1 = "";
     String base_fare;
@@ -58,7 +61,7 @@ public class CityActivity extends AppCompatActivity {
     String user_id;
     TextView pickupLocTxt, dateonTxt, timeatTxt, changeval, fareTxt, distanceTxt, durationTxt, dropLocTxt;
     //    ListView listView;
-    dbHelper yourrides;
+//    dbHelper yourrides;
     String datetime;
     SharedPreferences userpref;
     //    RecyclerView packView;
@@ -135,7 +138,7 @@ public class CityActivity extends AppCompatActivity {
         timeatTxt.setText(timeat);
 
         //initialiseing database
-        yourrides = new dbHelper(this);
+//        yourrides = new dbHelper(this);
 
         switch (v_type) {
             case "Auto":
@@ -377,6 +380,6 @@ public class CityActivity extends AppCompatActivity {
         Log.i("value","inserted");
         PrefsManager prefsManager = new PrefsManager(this);
         prefsManager.setTravel_type("City");
-//        startActivity(new Intent(this, YourRides.class));
+        startActivity(new Intent(this, YourRides.class));
     }
 }

@@ -17,6 +17,9 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.rabbitt.gotmytrip.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class cityBottomsheet extends BottomSheetDialogFragment {
 
     private static String pick_up_loc= null;
@@ -27,6 +30,8 @@ public class cityBottomsheet extends BottomSheetDialogFragment {
     private static String ori_lng = null;
     private static String dest_lat = null;
     private static String dest_lng = null;
+
+
 
     @Nullable
     @Override
@@ -76,6 +81,8 @@ public class cityBottomsheet extends BottomSheetDialogFragment {
                     tocity.putExtra("ori_lng", ori_lng);
                     tocity.putExtra("dest_lat", dest_lat);
                     tocity.putExtra("dest_lng", dest_lng);
+                    tocity.putExtra("date", currentDate());
+                    tocity.putExtra("time", currentTime());
                     startActivity(tocity);
                 }
                 else {
@@ -95,6 +102,24 @@ public class cityBottomsheet extends BottomSheetDialogFragment {
         });
 
         return v;
+    }
+
+    public static String currentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        // get current date time with Date()
+        Date date = new Date();
+        // System.out.println(dateFormat.format(date));
+        // don't print it, but save it!
+        return dateFormat.format(date);
+    }
+
+    public static String currentTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        // get current date time with Date()
+        Date date = new Date();
+        // System.out.println(dateFormat.format(date));
+        // don't print it, but save it!
+        return dateFormat.format(date);
     }
 
 

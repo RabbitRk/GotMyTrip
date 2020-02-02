@@ -12,13 +12,13 @@
                 android:icon="@drawable/ic_book"
                 android:title="Book" />
         </group>
-<!--        <group android:id="@+id/group2"-->
-<!--            android:checkableBehavior="single">-->
-<!--            <item-->
-<!--                android:id="@+id/nav_your_rides"-->
-<!--                android:icon="@drawable/ic_your_rides"-->
-<!--                android:title="Your Rides" />-->
-<!--        </group>-->
+        <group android:id="@+id/group2"
+            android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_your_rides"
+                android:icon="@drawable/ic_your_rides"
+                android:title="Your Rides" />
+        </group>
         <group android:id="@+id/group3"
             android:checkableBehavior="single">
             <item
