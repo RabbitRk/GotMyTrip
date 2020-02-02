@@ -25,6 +25,7 @@ import com.rabbitt.gotmytrip.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class BookBottomSheet extends BottomSheetDialogFragment {
 
@@ -87,12 +88,8 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if (!pick_up_loc.equals("")) {
-                    Calendar c = Calendar.getInstance();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    SimpleDateFormat dft = new SimpleDateFormat("HH:mm");
-                    String rideNow_date = df.format(c.getTime());
-                    String rideNow_time = dft.format(c.getTime());
-
+                    String rideNow_date = currentDate();
+                    String rideNow_time = currentTime();
                     rental_confirm(rideNow_date, rideNow_time);
                 }
                 else {
@@ -107,8 +104,6 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
                             });
                     alertDialog.show();
                 }
-
-
             }
         });
 
@@ -123,13 +118,11 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
                     final Calendar c = Calendar.getInstance();
                     final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                             new DatePickerDialog.OnDateSetListener() {
-
                                 @SuppressLint("DefaultLocale")
                                 @Override
                                 public void onDateSet(DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
-
-                                    SimpleDateFormat dateof = new SimpleDateFormat("dd-MM-yyyy");
+                                    SimpleDateFormat dateof = new SimpleDateFormat("yyyy-MM-dd");
                                     rideLater_date = dateof.format(c.getTime());
                                     getTime();
 
@@ -156,14 +149,11 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void getTime() {
-
         final Calendar c = Calendar.getInstance();
         int mHour = c.get(Calendar.HOUR_OF_DAY);
         int mMinute = c.get(Calendar.MINUTE);
-
         final TimePickerDialog timePickerDialog2 = new TimePickerDialog(getContext(),
                 new TimePickerDialog.OnTimeSetListener() {
-
                     @SuppressLint("DefaultLocale")
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -173,8 +163,6 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
                     }
                 }, mHour, mMinute, false);
         timePickerDialog2.show();
-
-
     }
 
     private void rental_confirm(String rideLater_date, String rideLater_time) {
@@ -188,6 +176,24 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
             ren.putExtra("ori_lat", ori_lat);
             ren.putExtra("ori_lng", ori_lng);
             startActivity(ren);
+    }
+
+    public static String currentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        // get current date time with Date()
+        Date date = new Date();
+        // System.out.println(dateFormat.format(date));
+        // don't print it, but save it!
+        return dateFormat.format(date);
+    }
+
+    public static String currentTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        // get current date time with Date()
+        Date date = new Date();
+        // System.out.println(dateFormat.format(date));
+        // don't print it, but save it!
+        return dateFormat.format(date);
     }
 
     @Override

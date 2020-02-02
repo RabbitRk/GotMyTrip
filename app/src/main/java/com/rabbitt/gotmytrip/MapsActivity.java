@@ -674,9 +674,9 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 //                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, AboutUsActivity.class));
                 break;
-            case R.id.nav_feedback:
-                startActivity(new Intent(this, FeedbackActivity.class));
-                break;
+//            case R.id.nav_feedback:
+//                startActivity(new Intent(this, FeedbackActivity.class));
+//                break;
 //            case R.id.nav_support:
 //                Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
 //                break;
