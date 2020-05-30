@@ -39,12 +39,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,7 +65,7 @@ public class RentalActivity extends AppCompatActivity {
     String oriLat, oriLng;
     TextView pickupLocTxt, dateonTxt, timeatTxt, changeval, fareTxt, per_kmTxt, per_hrTxt;
     ListView listView;
-    String packageid;
+    String packageid = "";
 //    dbHelper yourrides;
     String datetime;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -128,7 +125,7 @@ public class RentalActivity extends AppCompatActivity {
         oriLat = intent.getStringExtra("ori_lat");
         oriLng = intent.getStringExtra("ori_lng");
 
-        try {
+       /* try {
             @SuppressLint("SimpleDateFormat")
             final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
             final Date dateObj = sdf.parse(timeat);
@@ -139,7 +136,7 @@ public class RentalActivity extends AppCompatActivity {
 //            System.out.println(new SimpleDateFormat("K:mm a").format(dateObj));
         } catch (final ParseException e) {
             e.printStackTrace();
-        }
+        }*/
         //initializing textviews
         pickupLocTxt.setText(pickupLocation);
         dateonTxt.setText(dateon);
@@ -214,7 +211,7 @@ public class RentalActivity extends AppCompatActivity {
                         break;
                 }
                 bookrental();
-                Toast.makeText(RentalActivity.this, "You Selected " + listView.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RentalActivity.this, "You Selected " + listView.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -283,10 +280,11 @@ public class RentalActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
+    @SuppressLint("SetTextI18n")
     private void confirmAlert(String fare, String fare1, String fare2) {
-        per_hrTxt.setText(fare1);
-        per_kmTxt.setText(fare2);
-        fareTxt.setText(fare);
+        per_hrTxt.setText("Rs. "+fare1);
+        per_kmTxt.setText("Rs. "+fare2);
+        fareTxt.setText("Rs. "+fare);
     }
 
     // Opens Time and Date On Click
@@ -338,6 +336,12 @@ public class RentalActivity extends AppCompatActivity {
 //    }
 
     public void confirmBooking(View view) {
+
+        if (packageid.equals(""))
+        {
+            Toast.makeText(this, "Please select the package", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         final String oriLngLng = oriLat + ',' + oriLng;
 

@@ -31,10 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,18 +117,18 @@ public class OutstationActivity extends AppCompatActivity {
         destLat = intent.getStringExtra("dest_lat");
         destLng = intent.getStringExtra("dest_lng");
 
-        try {
-            @SuppressLint("SimpleDateFormat")
-            final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
-            final Date dateObj = sdf.parse(timeat);
-//            System.out.println(dateObj);
-            if (dateObj != null) {
-                timeat = dateObj.toString();
-            }
-//            System.out.println(new SimpleDateFormat("K:mm a").format(dateObj));
-        } catch (final ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            @SuppressLint("SimpleDateFormat")
+//            final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+//            final Date dateObj = sdf.parse(timeat);
+////            System.out.println(dateObj);
+//            if (dateObj != null) {
+//                timeat = dateObj.toString();
+//            }
+////            System.out.println(new SimpleDateFormat("K:mm a").format(dateObj));
+//        } catch (final ParseException e) {
+//            e.printStackTrace();
+//        }
         //initialiseing databse
 //        yourrides = new dbHelper(this);
 
@@ -213,7 +211,7 @@ public class OutstationActivity extends AppCompatActivity {
                         Log.i("totalLog", total_min);
                         Log.i("totalLog", per_km);
 
-                        Toast.makeText(OutstationActivity.this, "hellow  " + total_distance, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(OutstationActivity.this, "hellow  " + total_distance, Toast.LENGTH_SHORT).show();
                         confirmAlert(total_fare, total_hrs, total_min, total_distance, exclusive_hr, per_km, day_allowance, night_allownance);
 
                     } catch (JSONException e) {
@@ -222,8 +220,8 @@ public class OutstationActivity extends AppCompatActivity {
                     }
                 } else {
                     Log.i("Responce.............", response);
-                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Responce is  " + response, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -232,7 +230,7 @@ public class OutstationActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 progress.dismiss();
                 Log.i("Error", "volley response error");
-                Toast.makeText(getApplicationContext(), "Responce error failed   " + error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Your request can't be processed right now", Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -272,20 +270,20 @@ public class OutstationActivity extends AppCompatActivity {
 //        Log.i("textviewLog", per_km);
 //        Log.i("textviewLog", totalTime);
 
-        fareTxt.setText(total_fare);
+        fareTxt.setText("Rs. "+total_fare);
         durationTxt.setText(totalTime);
-        distanceTxt.setText(total_distance);
-        exclusiveHrTxt.setText(exclusive_hr);
-        perKmTxt.setText(per_km);
-        dayAllowanceTxt.setText(day_allowance);
-        nightAllowanceTxt.setText(night_allownance);
+        distanceTxt.setText(total_distance+" Km");
+        exclusiveHrTxt.setText("Rs. "+exclusive_hr);
+        perKmTxt.setText("Rs. "+per_km);
+        dayAllowanceTxt.setText("Rs. "+day_allowance);
+        nightAllowanceTxt.setText("Rs. "+night_allownance);
     }
 
     private void getuserPrefs() {
         userpref = getSharedPreferences(USER_PREFS, MODE_PRIVATE);
 
         user_id = userpref.getString(ID_KEY, "");
-        Toast.makeText(this, "Uid: " + user_id, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Uid: " + user_id, Toast.LENGTH_SHORT).show();
         if ("".equals(user_id)) {
             Toast.makeText(this, "User ID is not valid", Toast.LENGTH_SHORT).show();
         }
@@ -324,7 +322,7 @@ public class OutstationActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("Error", "volley response error");
-                Toast.makeText(getApplicationContext(), "Responce error failed   " + error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Your request can't be processed right now", Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

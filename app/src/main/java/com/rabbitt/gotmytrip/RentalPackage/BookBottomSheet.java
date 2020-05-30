@@ -72,15 +72,10 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
 
 
         assert v_type != null;
-        switch (v_type) {
-            case "Prime":
-                v_type = "2";
-                break;
-            case "SUV":
-                v_type = "3";
-                break;
-            default:
-                v_type = "2";
+        if ("SUV".equals(v_type)) {
+            v_type = "3";
+        } else {
+            v_type = "2";
         }
 
 
@@ -88,8 +83,11 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if (!pick_up_loc.equals("")) {
-                    String rideNow_date = currentDate();
-                    String rideNow_time = currentTime();
+                    Calendar c = Calendar.getInstance();
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat dft = new SimpleDateFormat("HH:mm");
+                    String rideNow_date = df.format(c.getTime());
+                    String rideNow_time = dft.format(c.getTime());
                     rental_confirm(rideNow_date, rideNow_time);
                 }
                 else {
@@ -115,7 +113,7 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if (!pick_up_loc.equals("")) {
-                    final Calendar c = Calendar.getInstance();
+//                    final Calendar c = Calendar.getInstance();
                     final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                             new DatePickerDialog.OnDateSetListener() {
                                 @SuppressLint("DefaultLocale")
@@ -123,7 +121,7 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
                                 public void onDateSet(DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
                                     SimpleDateFormat dateof = new SimpleDateFormat("yyyy-MM-dd");
-                                    rideLater_date = dateof.format(c.getTime());
+//                                    rideLater_date = dateof.format(c.getTime());
                                     getTime();
 
                                 }
@@ -146,6 +144,16 @@ public class BookBottomSheet extends BottomSheetDialogFragment {
             }
         });
         return v;
+    }
+
+    private void getCurrentDateTime() {
+//        Calendar c = Calendar.getInstance();
+////        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+////        @SuppressLint("SimpleDateFormat") SimpleDateFormat dft = new SimpleDateFormat("HH:mm");
+////        String rideNow_date = df.format(c.getTime());
+////        String rideNow_time = dft.format(c.getTime());
+//        dateonTxt.setText(rideNow_date);
+//        timeatTxt.setText(rideNow_time);
     }
 
     private void getTime() {

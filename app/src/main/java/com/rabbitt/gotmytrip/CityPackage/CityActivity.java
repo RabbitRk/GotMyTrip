@@ -46,8 +46,6 @@ import java.util.Objects;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.ID_KEY;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
-//import com.rabbitt.gotmytrip.DBhelper.dbHelper;
-
 public class CityActivity extends AppCompatActivity {
 
     private static final String TAG = "CityActivity";
@@ -225,6 +223,7 @@ public class CityActivity extends AppCompatActivity {
         progress.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.CITY, new Response.Listener<String>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(String response) {
                 progress.dismiss();
@@ -238,9 +237,9 @@ public class CityActivity extends AppCompatActivity {
                         duration = jb.getString("duration");
                         base_fare = jb.getString("fare");
 
-                        distanceTxt.setText(distanceto);
-                        durationTxt.setText(duration);
-                        fareTxt.setText(String.valueOf(base_fare));
+                        distanceTxt.setText("Distance: "+distanceto);
+                        durationTxt.setText("Duration: "+duration);
+                        fareTxt.setText(String.valueOf("Fare :"+base_fare));
 
                         Log.i("distance.......", distanceto);
                         Log.i("duration.......", duration);

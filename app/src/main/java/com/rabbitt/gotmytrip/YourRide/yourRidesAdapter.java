@@ -1,5 +1,6 @@
 package com.rabbitt.gotmytrip.YourRide;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,13 @@ public class yourRidesAdapter extends RecyclerView.Adapter<yourRidesAdapter.hold
         return new holder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull holder holder, int i) {
 
         ModalAdapter dataModel = dataModelArrayList.get(i);
 
-        holder.book_id.setText(dataModel.getBook_id());
+        holder.book_id.setText("#"+dataModel.getBook_id());
         holder.v_type.setText(dataModel.getV_type());
         holder.travel_type.setText(dataModel.getPrefix());
         holder.ori.setText(dataModel.getStart());

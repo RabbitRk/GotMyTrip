@@ -38,12 +38,10 @@ import java.util.Map;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.ID_KEY;
 import static com.rabbitt.gotmytrip.PrefsManager.PrefsManager.USER_PREFS;
 
-//import com.rabbitt.gotmytrip.DBhelper.dbHelper;
-
 public class YourRides extends AppCompatActivity {
 
     private static final String TAG = "MaluRk";
-//    dbHelper database;
+
     RecyclerView recyclerView;
     yourRidesAdapter recycler;
     ModalAdapter model;
@@ -86,16 +84,9 @@ public class YourRides extends AppCompatActivity {
 
         Log.i("HIteshdata", "" + productAdapter);
 
-//        RecyclerView.LayoutManager reLayoutManager = new LinearLayoutManager(getApplicationContext());
-//        recyclerView.setLayoutManager(reLayoutManager);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(recycler);
-
         prefsManager = new PrefsManager(this);
 
-            init();
-
-
+        init();
     }
 
     private void init() {

@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -12,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.rabbitt.gotmytrip.R;
+
+import java.util.Objects;
 
 public class InternetBroadcast extends BroadcastReceiver {
 
@@ -45,6 +49,7 @@ public class InternetBroadcast extends BroadcastReceiver {
                 });
 
                 try {
+                    Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.show();
                 } catch (WindowManager.BadTokenException e) {
                     e.printStackTrace();

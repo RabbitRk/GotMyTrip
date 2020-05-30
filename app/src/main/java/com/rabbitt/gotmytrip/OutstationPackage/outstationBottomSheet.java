@@ -76,9 +76,10 @@ public class outstationBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if (!pick_up_loc.equals("")&&!drop_loc.equals("")) {
+
                     Calendar c = Calendar.getInstance();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    SimpleDateFormat dft = new SimpleDateFormat("HH:mm");
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat dft = new SimpleDateFormat("HH:mm");
                     String rideNow_date = df.format(c.getTime());
                     String rideNow_time = dft.format(c.getTime());
 

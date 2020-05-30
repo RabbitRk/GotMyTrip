@@ -271,7 +271,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="serif"
                                 android:padding="5dp"
-                                android:text="Vehicle Type"
+                                android:text="Ride Details"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textStyle="bold" />
 
@@ -297,16 +297,16 @@
                         </LinearLayout>
 
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="2dp"
-                            android:paddingStart="10dp"
-                            android:text="Fare Details and Rules"
-                            android:textColor="@color/text_color"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="2dp"-->
+<!--                            android:layout_marginBottom="2dp"-->
+<!--                            android:paddingStart="10dp"-->
+<!--                            android:text="Fare Details and Rules"-->
+<!--                            android:textColor="@color/text_color"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:textStyle="bold" />-->
                         <!--<TextView-->
                         <!--android:id="@+id/fare"-->
                         <!--android:layout_width="match_parent"-->
@@ -320,16 +320,13 @@
                             android:id="@+id/fare"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Point 1"
                             android:padding="7dp"
-                            android:text="base fare"
                             android:textColor="@color/text_color" />
 
                         <TextView
                             android:id="@+id/duration"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="duration"
                             android:padding="7dp"
                             android:textColor="@color/text_color" />
 
@@ -337,7 +334,6 @@
                             android:id="@+id/distance"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="distance"
                             android:textColor="@color/text_color"
                             android:padding="5dp" />
 
